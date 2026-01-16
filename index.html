@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YOLO SLOTS - Premium Experience</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <style>
+        :root {
+            --gold: #ffd700;
+            --neon-pink: #ff00ff;
+            --neon-blue: #00ffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
+
+        body {
+            min-height: 100vh;
+            background: radial-gradient(circle at center, #1a1a2e 0%, #0a0a12 100%);
+            color: #fff;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #casino-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: 
+                linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                url('https://images.unsplash.com/photo-1596838132731-dd96238fd1e9?auto=format&fit=crop&q=80&w=2000');
+            background-size: cover;
+            background-position: center;
+            filter: blur(3px);
+        }
+
+        .overlay-glow {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, transparent 20%, rgba(0,0,0,0.8) 100%);
+            z-index: -1;
+        }
+
+        .beam {
+            position: absolute;
+            width: 2px;
+            height: 100vh;
+            background: linear-gradient(to bottom, transparent, rgba(255,215,0,0.3), transparent);
+            animation: moveBeam 5s infinite linear;
+            z-index: -1;
+        }
+
+        @keyframes moveBeam {
+            0% { transform: translateX(-100vw) skewX(-45deg); }
+            100% { transform: translateX(200vw) skewX(-45deg); }
+        }
+
+        .header {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .header h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            text-transform: uppercase;
+            background: linear-gradient(to bottom, #fff 20%, var(--gold) 50%, #b8860b 80%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.5));
+            letter-spacing: 10px;
+            margin-bottom: 10px;
+        }
+
+        .promo-badge {
+            background: var(--neon-pink);
+            padding: 5px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            box-shadow: 0 0 15px var(--neon-pink);
+            display: inline-block;
+        }
+
+        .gifts-grid {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            padding: 40px;
+            max-width: 1200px;
+        }
+
+        .gift {
+            width: 300px;
+            height: 400px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .gift-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+
+        .gift.selected .gift-inner { transform: rotateY(180deg) scale(1.1); }
+        .gift.locked { opacity: 0.3; filter: grayscale(1); pointer-events: none; }
+
+        .front, .back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            border: 2px solid var(--gold);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        }
+
+        .front {
+            background: linear-gradient(135deg, #222, #000);
+            overflow: hidden;
+        }
+
+        .front::after {
+            content: '';
+            position: absolute;
+            top: -100%; left: -100%;
+            width: 300%; height: 300%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine 4s infinite;
+        }
+
+        @keyframes shine { 
+            0% { top: -100%; left: -100%; } 
+            100% { top: 100%; left: 100%; } 
+        }
+
+        .back {
+            background: linear-gradient(135deg, #1a1a1a, #000);
+            transform: rotateY(180deg);
+            border: 3px solid var(--gold);
+            text-align:center;
+            padding:20px;
+        }
+
+        .box-icon {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 15px currentColor);
+        }
+
+        .back ul{
+            list-style:none;
+            line-height:1.7;
+            margin-top:10px;
+            font-size:0.95rem;
+        }
+
+        .screenshot-note{
+            margin:30px 20px;
+            padding:14px 20px;
+            border-radius:14px;
+            background:rgba(0,0,0,0.6);
+            border:1px dashed var(--gold);
+            text-align:center;
+            font-weight:600;
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 40px;
+            color: rgba(255,255,255,0.4);
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            .gift { width: 260px; height: 350px; }
+            .header h1 { letter-spacing: 4px; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="casino-bg"></div>
+<div class="overlay-glow"></div>
+
+<div class="beam" style="left: 20%; animation-delay: 0s;"></div>
+<div class="beam" style="left: 50%; animation-delay: 2s;"></div>
+<div class="beam" style="left: 80%; animation-delay: 4s;"></div>
+
+<div class="header">
+    <div class="promo-badge">EXCLUSIVE BONUS</div>
+    <h1>YOLO SLOTS</h1>
+    <p>Select one mystery box to reveal your casino bonus</p>
+</div>
+
+<div class="gifts-grid">
+
+    <!-- BONUS 1 -->
+    <div class="gift" onclick="openGift(this, '#ff00ff')">
+        <div class="gift-inner">
+            <div class="front" style="color: var(--neon-pink);">
+                <img src="https://cdn-icons-png.flaticon.com/512/261/261947.png" class="box-icon">
+                <h3>100% BONUS BOX</h3>
+            </div>
+            <div class="back">
+                <h2 style="color: var(--neon-pink);">100% Deposit Bonus</h2>
+                <ul>
+                    <li>Deposit $5 – $15</li>
+                    <li>50% Cashback if you lose</li>
+                    <li>Redeem up to $300</li>
+                    <li>Instant Cashout</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- BONUS 2 -->
+    <div class="gift" onclick="openGift(this, '#ffd700')">
+        <div class="gift-inner">
+            <div class="front" style="color: var(--gold);">
+                <img src="https://cdn-icons-png.flaticon.com/512/2150/2150150.png" class="box-icon">
+                <h3>50% BONUS BOX</h3>
+            </div>
+            <div class="back">
+                <h2 style="color: var(--gold);">50% Bonus + Free Plays</h2>
+                <ul>
+                    <li>Deposit $5 – $15</li>
+                    <li>5 Free Plays if you lose</li>
+                    <li>Redeem up to $250</li>
+                    <li>Instant Cashout</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- BONUS 3 -->
+    <div class="gift" onclick="openGift(this, '#00ffff')">
+        <div class="gift-inner">
+            <div class="front" style="color: var(--neon-blue);">
+                <img src="https://cdn-icons-png.flaticon.com/512/3209/3209129.png" class="box-icon">
+                <h3>70% BONUS BOX</h3>
+            </div>
+            <div class="back">
+                <h2 style="color: var(--neon-blue);">70% High Roller Bonus</h2>
+                <ul>
+                    <li>Deposit $10 – $40</li>
+                    <li>$10 Cashback if you lose</li>
+                    <li>Redeem up to $300</li>
+                    <li>Instant Cashout</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="screenshot-note">
+    📸 Take a screenshot of the revealed bonus<br>
+    👉 Send it to our support to activate your reward
+</div>
+
+<footer>
+    © 2026 YOLO SLOTS | 18+ RESPONSIBLE GAMING
+</footer>
+
+<script>
+let isChosen = false;
+
+function openGift(element, color) {
+    if (isChosen) return;
+    isChosen = true;
+
+    element.classList.add('selected');
+
+    document.querySelectorAll('.gift').forEach(gift => {
+        if (gift !== element) gift.classList.add('locked');
+    });
+
+    const duration = 3000;
+    const end = Date.now() + duration;
+
+    (function frame() {
+        confetti({
+            particleCount: 3,
+            angle: 60,
+            spread: 55,
+            origin: { x: 0 },
+            colors: [color, '#ffffff']
+        });
+        confetti({
+            particleCount: 3,
+            angle: 120,
+            spread: 55,
+            origin: { x: 1 },
+            colors: [color, '#ffffff']
+        });
+        if (Date.now() < end) requestAnimationFrame(frame);
+    })();
+}
+</script>
+
+</body>
+</html>
