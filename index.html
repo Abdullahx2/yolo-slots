@@ -10,8 +10,8 @@
 <style>
 :root{
 --gold:#ffd700;
---neon-pink:#ff00ff;
---neon-blue:#00ffff;
+--pink:#ff00ff;
+--blue:#00ffff;
 }
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Roboto,sans-serif}
 
@@ -25,7 +25,6 @@ flex-direction:column;
 align-items:center;
 }
 
-/* background */
 #casino-bg{
 position:fixed;
 inset:0;
@@ -37,7 +36,6 @@ background-size:cover;
 background-position:center;
 }
 
-/* header */
 .header{text-align:center;padding:50px 20px}
 .header h1{
 font-size:clamp(2.5rem,8vw,5rem);
@@ -47,17 +45,17 @@ background:linear-gradient(to bottom,#fff 20%,var(--gold) 50%,#b8860b 80%);
 -webkit-text-fill-color:transparent;
 text-shadow:0 0 15px rgba(255,215,0,.5);
 }
+
 .promo-badge{
-background:var(--neon-pink);
+background:var(--pink);
 padding:6px 22px;
 border-radius:50px;
 font-weight:700;
-box-shadow:0 0 15px var(--neon-pink);
+box-shadow:0 0 15px var(--pink);
 display:inline-block;
 margin-bottom:15px;
 }
 
-/* grid */
 .gifts-grid{
 display:flex;
 gap:40px;
@@ -67,35 +65,36 @@ padding:40px;
 max-width:1200px;
 }
 
-/* cards */
 .gift{
 width:300px;
 height:400px;
-perspective:1200px;
 }
+
 .gift-inner{
 width:100%;
 height:100%;
 border-radius:20px;
 border:2px solid var(--gold);
-background:linear-gradient(135deg,#222,#000);
+background:linear-gradient(135deg,#1b1b1b,#000);
 display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center;
 box-shadow:0 0 30px rgba(0,0,0,.5);
+text-align:center;
+padding:20px;
 }
 
-.box-icon{
-width:120px;
-height:120px;
-margin-bottom:15px;
-filter:drop-shadow(0 0 12px currentColor);
+.mystery-icon{
+width:110px;
+height:110px;
+margin-bottom:20px;
+filter:drop-shadow(0 0 12px var(--gold));
 }
 
 .reveal-btn{
-margin-top:18px;
-padding:12px 26px;
+margin-top:20px;
+padding:12px 28px;
 border-radius:30px;
 border:2px solid var(--gold);
 background:transparent;
@@ -104,21 +103,22 @@ font-weight:700;
 letter-spacing:1px;
 cursor:pointer;
 }
-.reveal-btn:active{
-transform:scale(.96);
+
+.reveal-btn:active{transform:scale(.96)}
+
+.result{
+display:none;
 }
 
-.gift.revealed{
-background:linear-gradient(135deg,#1a1a1a,#000);
+.gift.revealed .mystery,
+.gift.revealed .reveal-btn{
+display:none;
 }
 
-.gift.revealed .gift-inner{
-background:linear-gradient(135deg,#1a1a1a,#000);
+.gift.revealed .result{
+display:block;
 }
 
-.hidden{display:none}
-
-/* mobile */
 @media(max-width:768px){
 .gift{width:260px;height:auto}
 .header h1{letter-spacing:4px}
@@ -133,50 +133,74 @@ background:linear-gradient(135deg,#1a1a1a,#000);
 <div class="header">
 <div class="promo-badge">EXCLUSIVE BONUS</div>
 <h1>YOLO SLOTS</h1>
-<p>Select one bonus and tap reveal</p>
+<p>Choose one mystery box to reveal your reward</p>
 </div>
 
 <div class="gifts-grid">
 
+<!-- BONUS 1 -->
 <div class="gift" data-color="#ff00ff">
 <div class="gift-inner">
-<img src="https://cdn-icons-png.flaticon.com/512/261/261947.png" class="box-icon">
-<h3>100% BONUS BOX</h3>
+
+<div class="mystery">
+<img src="https://cdn-icons-png.flaticon.com/512/1055/1055646.png" class="mystery-icon">
+<h3>MYSTERY BONUS</h3>
+<p>Tap to reveal your reward</p>
+</div>
+
 <button class="reveal-btn">REVEAL BONUS</button>
 
-<div class="result hidden">
+<div class="result">
+<img src="https://cdn-icons-png.flaticon.com/512/261/261947.png" class="mystery-icon">
 <h2 style="color:#ff00ff">100% Deposit Bonus</h2>
-<p>Deposit $5–$15<br>50% Cashback if lose<br>Redeem up to $300<br>Instant Cashout</p>
-<p>📸 Take screenshot & send to support</p>
+<p>Deposit $5–$15<br>50% Cashback if you lose<br>Redeem up to $300<br>Instant Cashout</p>
+<p>📸 Screenshot & send to support</p>
 </div>
+
 </div>
 </div>
 
+<!-- BONUS 2 -->
 <div class="gift" data-color="#ffd700">
 <div class="gift-inner">
-<img src="https://cdn-icons-png.flaticon.com/512/2150/2150150.png" class="box-icon">
-<h3>50% BONUS BOX</h3>
+
+<div class="mystery">
+<img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" class="mystery-icon">
+<h3>MYSTERY BONUS</h3>
+<p>Tap to reveal your reward</p>
+</div>
+
 <button class="reveal-btn">REVEAL BONUS</button>
 
-<div class="result hidden">
+<div class="result">
+<img src="https://cdn-icons-png.flaticon.com/512/2150/2150150.png" class="mystery-icon">
 <h2 style="color:#ffd700">50% Bonus + Free Plays</h2>
-<p>Deposit $5–$15<br>5 Free Plays if lose<br>Redeem up to $250<br>Instant Cashout</p>
-<p>📸 Take screenshot & send to support</p>
+<p>Deposit $5–$15<br>5 Free Plays if you lose<br>Redeem up to $250<br>Instant Cashout</p>
+<p>📸 Screenshot & send to support</p>
 </div>
+
 </div>
 </div>
 
+<!-- BONUS 3 -->
 <div class="gift" data-color="#00ffff">
 <div class="gift-inner">
-<img src="https://cdn-icons-png.flaticon.com/512/3209/3209129.png" class="box-icon">
-<h3>70% BONUS BOX</h3>
+
+<div class="mystery">
+<img src="https://cdn-icons-png.flaticon.com/512/833/833524.png" class="mystery-icon">
+<h3>MYSTERY BONUS</h3>
+<p>Tap to reveal your reward</p>
+</div>
+
 <button class="reveal-btn">REVEAL BONUS</button>
 
-<div class="result hidden">
+<div class="result">
+<img src="https://cdn-icons-png.flaticon.com/512/3209/3209129.png" class="mystery-icon">
 <h2 style="color:#00ffff">70% High Roller Bonus</h2>
-<p>Deposit $10–$40<br>$10 Cashback if lose<br>Redeem up to $300<br>Instant Cashout</p>
-<p>📸 Take screenshot & send to support</p>
+<p>Deposit $10–$40<br>$10 Cashback if you lose<br>Redeem up to $300<br>Instant Cashout</p>
+<p>📸 Screenshot & send to support</p>
 </div>
+
 </div>
 </div>
 
@@ -196,12 +220,9 @@ opened=true;
 
 const gift=e.target.closest('.gift');
 gift.classList.add('revealed');
-btn.remove();
-
-gift.querySelector('.result').classList.remove('hidden');
 
 confetti({
-particleCount:120,
+particleCount:140,
 spread:70,
 origin:{y:.6},
 colors:[gift.dataset.color,'#fff']
