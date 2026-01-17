@@ -3,37 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YOLO Slots - Bonus Selection</title>
+    <title>YOLO Slots - Golden Ticket Bonus</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', system-ui, sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
         
         body {
-            background: linear-gradient(145deg, #0f0f1a, #1a1a2e);
-            color: #ffffff;
+            background: linear-gradient(145deg, #0a0a14, #151522);
+            color: #fff;
             min-height: 100vh;
             padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            overflow-x: hidden;
         }
         
+        /* CONTAINER */
         .container {
             width: 100%;
-            max-width: 900px;
-            background: linear-gradient(145deg, #1a1a2e, #16213e);
-            border-radius: 25px;
-            padding: 40px 35px;
+            max-width: 1000px;
+            background: rgba(20, 20, 35, 0.7);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 40px;
             margin: 20px auto;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+        
+        /* GOLDEN BORDER EFFECT */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ffd700, #ffed4e, #ffd700, #ffed4e);
+            border-radius: 32px;
+            z-index: -1;
+            opacity: 0.3;
         }
         
         /* HEADER */
@@ -43,152 +62,218 @@
         }
         
         .logo {
-            font-size: 3.5rem;
+            font-size: 3.8rem;
             font-weight: 900;
-            background: linear-gradient(90deg, #8a2be2, #ff00ff, #00ffff);
+            background: linear-gradient(45deg, #ffd700, #ffed4e, #ffd700);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             margin-bottom: 15px;
             letter-spacing: 1px;
+            text-shadow: 0 5px 20px rgba(255, 215, 0, 0.3);
         }
         
-        .subtitle {
+        .tagline {
             font-size: 1.3rem;
-            color: #a0a8ff;
+            color: #d4c690;
             font-weight: 300;
-            line-height: 1.6;
+            letter-spacing: 2px;
         }
         
         /* INSTRUCTION */
-        .instruction {
-            background: rgba(138, 43, 226, 0.1);
-            border-radius: 18px;
-            padding: 25px;
-            margin: 30px 0;
-            text-align: center;
-            border: 2px solid rgba(138, 43, 226, 0.2);
-        }
-        
-        /* BONUS OPTIONS */
-        .bonus-options {
-            margin: 40px 0;
-        }
-        
-        .bonus-card {
-            background: rgba(255, 255, 255, 0.05);
+        .instruction-box {
+            background: linear-gradient(145deg, rgba(255, 215, 0, 0.1), rgba(255, 237, 78, 0.05));
             border-radius: 20px;
-            margin-bottom: 25px;
-            overflow: hidden;
-            border: 2px solid transparent;
-            transition: all 0.3s;
+            padding: 25px 30px;
+            margin: 30px auto;
+            text-align: center;
+            max-width: 700px;
+            border: 2px solid rgba(255, 215, 0, 0.2);
         }
         
-        .bonus-card.locked {
-            opacity: 0.6;
+        .instruction-text {
+            font-size: 1.4rem;
+            color: #ffed4e;
+            margin-bottom: 10px;
+        }
+        
+        /* TICKETS GRID */
+        .tickets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .tickets-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+        }
+        
+        /* TICKET CARD */
+        .ticket-card {
+            background: linear-gradient(145deg, rgba(30, 30, 45, 0.8), rgba(20, 20, 35, 0.9));
+            border-radius: 20px;
+            padding: 30px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .ticket-card:hover {
+            transform: translateY(-10px);
+            border-color: #ffd700;
+            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.2);
+        }
+        
+        .ticket-card.locked {
+            opacity: 0.5;
             pointer-events: none;
         }
         
-        .card-header {
-            padding: 25px 30px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+        .ticket-card.opened {
+            border-color: #ffed4e;
+            box-shadow: 0 0 40px rgba(255, 237, 78, 0.3);
         }
         
-        .card-left {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        
-        .card-icon {
-            font-size: 2.8rem;
-            width: 70px;
-            height: 70px;
-            background: rgba(138, 43, 226, 0.2);
+        /* TICKET DESIGN */
+        .ticket-design {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(145deg, #1a1a2e, #16213e);
             border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid #ffd700;
+            margin-bottom: 25px;
+        }
+        
+        .ticket-design::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: linear-gradient(45deg, 
+                transparent 0%, 
+                rgba(255, 215, 0, 0.1) 50%, 
+                transparent 100%);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        /* CLOSED TICKET STATE */
+        .ticket-seal {
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, #ffd700, #ff9900);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 2.5rem;
+            color: #1a1a2e;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
         }
         
-        .card-title {
+        .ticket-label {
             font-size: 1.6rem;
             font-weight: 700;
+            color: #ffed4e;
+            text-transform: uppercase;
+            letter-spacing: 3px;
         }
         
-        .card-badge {
-            display: inline-block;
-            padding: 6px 15px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-top: 8px;
-        }
-        
-        .click-hint {
-            color: #8a2be2;
-            font-size: 0.9rem;
+        .ticket-subtext {
+            color: #d4c690;
             margin-top: 10px;
-            opacity: 0.8;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
         }
         
-        /* HIDDEN BONUS CONTENT */
+        /* OPENED TICKET STATE */
         .bonus-content {
             display: none;
-            padding: 0 30px 25px;
+            width: 100%;
+            animation: fadeIn 0.6s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .bonus-content.show {
             display: block;
-            animation: fadeIn 0.4s ease;
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .bonus-title {
+            font-size: 1.8rem;
+            color: #ffed4e;
+            margin-bottom: 25px;
+            text-align: center;
         }
         
         .bonus-item {
             padding: 15px;
             background: rgba(0, 0, 0, 0.3);
             border-radius: 12px;
-            margin: 10px 0;
+            margin: 12px 0;
             display: flex;
             align-items: center;
             gap: 15px;
             font-size: 1.1rem;
+            border-left: 4px solid #ffd700;
         }
         
         .bonus-item i {
-            color: #8a2be2;
+            color: #ffd700;
             width: 25px;
+            font-size: 1.2rem;
         }
         
         /* SELECT BUTTON */
         .select-btn {
-            background: linear-gradient(90deg, #8a2be2, #ff00ff);
-            color: white;
+            background: linear-gradient(145deg, #ffd700, #ffed4e);
+            color: #1a1a2e;
             border: none;
             padding: 18px 40px;
             border-radius: 15px;
             font-size: 1.2rem;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
-            margin-top: 20px;
+            margin-top: 25px;
             width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 15px;
             transition: all 0.3s;
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.4);
+            letter-spacing: 1px;
         }
         
         .select-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(138, 43, 226, 0.4);
+            box-shadow: 0 15px 30px rgba(255, 215, 0, 0.6);
         }
         
         .select-btn:disabled {
@@ -200,16 +285,17 @@
         /* REVEALED SECTION */
         .revealed-section {
             display: none;
-            margin-top: 50px;
-            padding: 35px;
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 20px;
-            border: 2px solid #8a2be2;
-            animation: slideUp 0.5s ease;
+            margin-top: 60px;
+            padding: 40px;
+            background: linear-gradient(145deg, rgba(20, 20, 35, 0.9), rgba(10, 10, 25, 0.95));
+            border-radius: 25px;
+            border: 3px solid #ffed4e;
+            animation: slideUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
         }
         
         @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
+            from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
@@ -218,34 +304,50 @@
         }
         
         .revealed-title {
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             text-align: center;
-            color: #8a2be2;
-            margin-bottom: 25px;
+            color: #ffed4e;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 25px;
         }
         
         .selected-bonus-box {
-            background: rgba(138, 43, 226, 0.1);
-            border-radius: 18px;
-            padding: 30px;
-            margin: 25px 0;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 20px;
+            padding: 35px;
+            margin: 30px 0;
+            border: 2px solid rgba(255, 215, 0, 0.2);
         }
         
-        .screenshot-instruction {
-            background: rgba(0, 255, 255, 0.1);
-            border-radius: 18px;
-            padding: 25px;
-            margin: 30px 0;
+        /* SCREENSHOT SECTION */
+        .screenshot-box {
+            background: linear-gradient(145deg, rgba(255, 100, 100, 0.1), rgba(255, 215, 0, 0.1));
+            border-radius: 20px;
+            padding: 30px;
+            margin: 35px 0;
             text-align: center;
-            border-left: 5px solid #00ffff;
+            border-left: 5px solid #ff6464;
+        }
+        
+        .screenshot-title {
+            font-size: 1.8rem;
+            color: #ff6464;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
         }
         
         /* FOOTER */
         footer {
-            margin-top: 40px;
-            text-align: center;
-            color: #7a86b6;
+            margin-top: 50px;
+            color: #7a7a9e;
             font-size: 0.95rem;
+            text-align: center;
             padding-top: 25px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             width: 100%;
@@ -255,26 +357,25 @@
         @media (max-width: 768px) {
             .container {
                 padding: 30px 25px;
+                border-radius: 25px;
             }
             
             .logo {
-                font-size: 2.8rem;
+                font-size: 3rem;
             }
             
-            .card-header {
-                padding: 20px;
+            .ticket-design {
+                height: 180px;
+            }
+            
+            .revealed-title {
+                font-size: 2rem;
                 flex-direction: column;
-                align-items: flex-start;
                 gap: 15px;
             }
             
-            .card-left {
-                width: 100%;
-                justify-content: space-between;
-            }
-            
-            .bonus-content {
-                padding: 0 20px 20px;
+            .bonus-title {
+                font-size: 1.6rem;
             }
         }
         
@@ -288,16 +389,20 @@
             }
             
             .logo {
-                font-size: 2.4rem;
+                font-size: 2.5rem;
             }
             
-            .card-icon {
-                width: 60px;
-                height: 60px;
-                font-size: 2.2rem;
+            .instruction-text {
+                font-size: 1.2rem;
             }
             
-            .card-title {
+            .ticket-seal {
+                width: 70px;
+                height: 70px;
+                font-size: 2rem;
+            }
+            
+            .ticket-label {
                 font-size: 1.4rem;
             }
         }
@@ -308,35 +413,33 @@
         <!-- HEADER -->
         <div class="header">
             <h1 class="logo">YOLO SLOTS</h1>
-            <p class="subtitle">Premium gaming experience with exclusive bonuses.<br>Select your reward below.</p>
+            <p class="tagline">Premium Casino Experience</p>
         </div>
         
         <!-- INSTRUCTION -->
-        <div class="instruction">
-            <i class="fas fa-star"></i>
-            <strong>Click "SELECT BONUS" button to reveal your chosen bonus</strong>
-            <i class="fas fa-star"></i>
-            <p style="margin-top: 10px; color: #b0b8ff;">Your selection will be locked - choose wisely!</p>
+        <div class="instruction-box">
+            <p class="instruction-text">
+                <i class="fas fa-gem"></i>
+                CHOOSE ONE GOLDEN TICKET TO REVEAL YOUR BONUS
+                <i class="fas fa-gem"></i>
+            </p>
+            <p style="color: #d4c690; margin-top: 10px;">
+                Click "OPEN TICKET" to reveal your exclusive reward
+            </p>
         </div>
         
-        <!-- BONUS OPTIONS -->
-        <div class="bonus-options">
-            <!-- OPTION 1: 50% BONUS + FREE PLAY -->
-            <div class="bonus-card">
-                <div class="card-header">
-                    <div class="card-left">
-                        <div class="card-icon">💰</div>
-                        <div>
-                            <div class="card-title">50% Bonus + Free Plays</div>
-                            <span class="card-badge" style="color: #ffd700;">Most Popular</span>
-                            <div class="click-hint">
-                                Click button below to reveal details
-                            </div>
-                        </div>
-                    </div>
+        <!-- GOLDEN TICKETS -->
+        <div class="tickets-grid">
+            <!-- TICKET 1 -->
+            <div class="ticket-card" id="ticket1">
+                <div class="ticket-design">
+                    <div class="ticket-seal">?</div>
+                    <div class="ticket-label">MYSTERY BONUS</div>
+                    <div class="ticket-subtext">Golden Ticket #1</div>
                 </div>
                 
                 <div class="bonus-content" id="bonus-1">
+                    <h3 class="bonus-title">50% Bonus + Free Plays</h3>
                     <div class="bonus-item">
                         <i class="fas fa-wallet"></i>
                         Deposit $5 – $15
@@ -355,30 +458,22 @@
                     </div>
                 </div>
                 
-                <div style="padding: 0 30px 25px;">
-                    <button class="select-btn" onclick="selectAndRevealBonus(1)">
-                        <i class="fas fa-lock-open"></i>
-                        SELECT BONUS
-                    </button>
-                </div>
+                <button class="select-btn" onclick="openTicket(1)">
+                    <i class="fas fa-lock-open"></i>
+                    OPEN TICKET
+                </button>
             </div>
             
-            <!-- OPTION 2: 100% DEPOSIT BONUS -->
-            <div class="bonus-card">
-                <div class="card-header">
-                    <div class="card-left">
-                        <div class="card-icon">👑</div>
-                        <div>
-                            <div class="card-title">100% Deposit Bonus</div>
-                            <span class="card-badge" style="color: #c0c0c0;">Premium</span>
-                            <div class="click-hint">
-                                Click button below to reveal details
-                            </div>
-                        </div>
-                    </div>
+            <!-- TICKET 2 -->
+            <div class="ticket-card" id="ticket2">
+                <div class="ticket-design">
+                    <div class="ticket-seal">?</div>
+                    <div class="ticket-label">MYSTERY BONUS</div>
+                    <div class="ticket-subtext">Golden Ticket #2</div>
                 </div>
                 
                 <div class="bonus-content" id="bonus-2">
+                    <h3 class="bonus-title">100% Deposit Bonus</h3>
                     <div class="bonus-item">
                         <i class="fas fa-wallet"></i>
                         Deposit $5 – $15
@@ -397,30 +492,22 @@
                     </div>
                 </div>
                 
-                <div style="padding: 0 30px 25px;">
-                    <button class="select-btn" onclick="selectAndRevealBonus(2)">
-                        <i class="fas fa-lock-open"></i>
-                        SELECT BONUS
-                    </button>
-                </div>
+                <button class="select-btn" onclick="openTicket(2)">
+                    <i class="fas fa-lock-open"></i>
+                    OPEN TICKET
+                </button>
             </div>
             
-            <!-- OPTION 3: 70% HIGH ROLLER BONUS -->
-            <div class="bonus-card">
-                <div class="card-header">
-                    <div class="card-left">
-                        <div class="card-icon">⚡</div>
-                        <div>
-                            <div class="card-title">70% High Roller Bonus</div>
-                            <span class="card-badge" style="color: #00ffff;">Best Value</span>
-                            <div class="click-hint">
-                                Click button below to reveal details
-                            </div>
-                        </div>
-                    </div>
+            <!-- TICKET 3 -->
+            <div class="ticket-card" id="ticket3">
+                <div class="ticket-design">
+                    <div class="ticket-seal">?</div>
+                    <div class="ticket-label">MYSTERY BONUS</div>
+                    <div class="ticket-subtext">Golden Ticket #3</div>
                 </div>
                 
                 <div class="bonus-content" id="bonus-3">
+                    <h3 class="bonus-title">70% High Roller Bonus</h3>
                     <div class="bonus-item">
                         <i class="fas fa-wallet"></i>
                         Deposit $10 – $40
@@ -439,50 +526,54 @@
                     </div>
                 </div>
                 
-                <div style="padding: 0 30px 25px;">
-                    <button class="select-btn" onclick="selectAndRevealBonus(3)">
-                        <i class="fas fa-lock-open"></i>
-                        SELECT BONUS
-                    </button>
-                </div>
+                <button class="select-btn" onclick="openTicket(3)">
+                    <i class="fas fa-lock-open"></i>
+                    OPEN TICKET
+                </button>
             </div>
         </div>
         
         <!-- REVEALED SECTION -->
         <div class="revealed-section" id="revealedSection">
-            <h2 class="revealed-title">🎉 Your Bonus Is Revealed!</h2>
+            <h2 class="revealed-title">
+                <i class="fas fa-trophy"></i>
+                <span>GOLDEN TICKET OPENED!</span>
+                <i class="fas fa-trophy"></i>
+            </h2>
             
             <div class="selected-bonus-box" id="selectedBonus">
                 <!-- Selected bonus will appear here -->
             </div>
             
-            <div class="screenshot-instruction">
-                <i class="fas fa-camera fa-2x"></i>
-                <div style="margin-top: 15px;">
-                    <strong style="font-size: 1.4rem;">📸 TAKE SCREENSHOT NOW</strong><br>
-                    <p style="margin-top: 10px; font-size: 1.1rem;">
-                        Send this screenshot to YOLO Slots support team<br>
-                        to claim your bonus instantly!
-                    </p>
+            <div class="screenshot-box">
+                <h3 class="screenshot-title">
+                    <i class="fas fa-camera fa-2x"></i>
+                    <span>📸 TAKE SCREENSHOT NOW</span>
+                </h3>
+                <p style="font-size: 1.2rem; margin: 15px 0;">
+                    Send this screenshot to YOLO Slots support<br>
+                    to claim your bonus instantly!
+                </p>
+                <div style="background: rgba(255, 100, 100, 0.1); padding: 15px; border-radius: 10px; margin-top: 20px;">
+                    <i class="fas fa-clock"></i> <strong>Valid for 24 hours only</strong>
                 </div>
             </div>
             
-            <div style="text-align: center; color: #a0a8ff; margin-top: 20px;">
-                <i class="fas fa-info-circle"></i> Bonus locked - cannot be changed
+            <div style="text-align: center; color: #d4c690; margin-top: 25px; font-size: 1rem;">
+                <i class="fas fa-lock"></i> Bonus has been locked to your account
             </div>
         </div>
     </div>
     
     <footer>
-        &copy; <span id="currentYear"></span> YOLO Slots Gaming Platform. 18+ Only.<br>
-        <small style="opacity: 0.8;">Play responsibly. Terms apply.</small>
+        &copy; <span id="currentYear"></span> YOLO Slots. 18+ Only. Play responsibly.<br>
+        <small style="opacity: 0.8;">Terms and conditions apply.</small>
     </footer>
 
     <script>
-        let selectedBonus = null;
-        let isRevealed = false;
+        let isTicketOpened = false;
         
-        // Bonus data - EXACTLY AS YOU SPECIFIED
+        // Bonus data - EXACTLY as you specified
         const bonuses = {
             1: {
                 title: "50% Bonus + Free Plays",
@@ -516,45 +607,50 @@
             }
         };
         
-        // Select and reveal bonus in ONE CLICK
-        function selectAndRevealBonus(bonusNumber) {
-            if (isRevealed) return;
-            
-            // Hide all bonus contents
-            document.querySelectorAll('.bonus-content').forEach(content => {
-                content.classList.remove('show');
-            });
+        function openTicket(ticketNumber) {
+            if (isTicketOpened) return;
             
             // Disable all buttons
             document.querySelectorAll('.select-btn').forEach(btn => {
                 btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-lock"></i> LOCKED';
             });
             
-            // Show selected bonus content
-            const content = document.getElementById(`bonus-${bonusNumber}`);
-            content.classList.add('show');
-            
-            // Lock all cards
-            document.querySelectorAll('.bonus-card').forEach(card => {
+            // Lock all tickets
+            document.querySelectorAll('.ticket-card').forEach(card => {
                 card.classList.add('locked');
             });
             
-            selectedBonus = bonusNumber;
-            isRevealed = true;
+            // Open selected ticket
+            const selectedTicket = document.getElementById(`ticket${ticketNumber}`);
+            selectedTicket.classList.remove('locked');
+            selectedTicket.classList.add('opened');
             
-            // Wait 1 second then show revealed section
+            // Hide ticket design and show bonus
+            const ticketDesign = selectedTicket.querySelector('.ticket-design');
+            const bonusContent = document.getElementById(`bonus-${ticketNumber}`);
+            
+            ticketDesign.style.display = 'none';
+            bonusContent.classList.add('show');
+            
+            // Change button text
+            const ticketBtn = selectedTicket.querySelector('.select-btn');
+            ticketBtn.innerHTML = '<i class="fas fa-check"></i> SELECTED';
+            
+            isTicketOpened = true;
+            
+            // Show revealed section after animation
             setTimeout(() => {
-                showRevealedBonus(bonusNumber);
-            }, 1000);
+                showRevealedBonus(ticketNumber);
+            }, 800);
         }
         
-        // Show revealed bonus section
-        function showRevealedBonus(bonusNumber) {
-            const bonus = bonuses[bonusNumber];
+        function showRevealedBonus(ticketNumber) {
+            const bonus = bonuses[ticketNumber];
             const selectedBonusDiv = document.getElementById('selectedBonus');
             
             selectedBonusDiv.innerHTML = `
-                <h3 style="color: #8a2be2; font-size: 1.8rem; margin-bottom: 25px; text-align: center;">
+                <h3 style="color: #ffed4e; font-size: 2rem; margin-bottom: 30px; text-align: center;">
                     ${bonus.icon} ${bonus.title}
                 </h3>
                 ${bonus.details.map(detail => `
@@ -563,10 +659,6 @@
                         ${detail}
                     </div>
                 `).join('')}
-                <div class="bonus-item" style="margin-top: 20px; background: rgba(138, 43, 226, 0.2);">
-                    <i class="fas fa-star"></i>
-                    <strong>Bonus Code: YOLO${bonusNumber}${Math.floor(1000 + Math.random() * 9000)}</strong>
-                </div>
             `;
             
             // Show revealed section
@@ -577,13 +669,13 @@
             setTimeout(() => {
                 revealedSection.scrollIntoView({ 
                     behavior: 'smooth', 
-                    block: 'start'
+                    block: 'center'
                 });
             }, 300);
             
             // Show screenshot alert
             setTimeout(() => {
-                alert("🎊 BONUS SELECTED!\n\n📸 Please take a screenshot NOW\n\nSend to YOLO Slots support to claim your bonus\n\nBonus will be activated within 15 minutes!");
+                alert("🎫 GOLDEN TICKET OPENED!\n\n📸 Take a screenshot NOW\n\nSend to YOLO Slots support team\n\nBonus will be activated within 15 minutes!");
             }, 500);
         }
         
