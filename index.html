@@ -1,242 +1,602 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>YOLO SLOTS – Mystery Bonus</title>
-
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui}
-
-body{
-    min-height:100vh;
-    background:radial-gradient(circle at top,#1b1f3b,#07080f);
-    color:#fff;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    overflow-x:hidden;
-}
-
-header{
-    text-align:center;
-    padding:50px 20px 30px;
-}
-
-header h1{
-    font-size:clamp(2.2rem,6vw,4rem);
-    letter-spacing:6px;
-    background:linear-gradient(#fff,#ffd700);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-}
-
-header p{
-    opacity:.7;
-    margin-top:10px;
-}
-
-.grid{
-    display:flex;
-    gap:30px;
-    flex-wrap:wrap;
-    justify-content:center;
-    padding:40px 20px;
-}
-
-.card{
-    width:280px;
-    height:360px;
-    perspective:1200px;
-    touch-action:pan-y;
-}
-
-.inner{
-    width:100%;
-    height:100%;
-    position:relative;
-    transform-style:preserve-3d;
-    transition:transform .9s cubic-bezier(.2,.8,.2,1);
-}
-
-.card.revealed .inner{
-    transform:rotateY(180deg);
-}
-
-.face{
-    position:absolute;
-    inset:0;
-    border-radius:20px;
-    backface-visibility:hidden;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-}
-
-.front{
-    background:linear-gradient(145deg,#10142c,#050611);
-    border:1px solid rgba(255,215,0,.4);
-}
-
-.front button{
-    margin-top:25px;
-    padding:14px 28px;
-    border-radius:40px;
-    border:none;
-    background:linear-gradient(135deg,#ffd700,#ffb700);
-    font-weight:700;
-    cursor:pointer;
-}
-
-.back{
-    transform:rotateY(180deg);
-    background:linear-gradient(145deg,#070912,#02030a);
-    border:1px solid rgba(255,215,0,.6);
-}
-
-.back img{
-    width:90px;
-    margin-bottom:15px;
-}
-
-.back h2{
-    color:#ffd700;
-    margin-bottom:10px;
-}
-
-.back ul{
-    list-style:none;
-    line-height:1.6;
-    font-size:.95rem;
-    opacity:.85;
-}
-
-.locked{
-    opacity:.3;
-    pointer-events:none;
-}
-
-.note{
-    margin:20px;
-    padding:16px 22px;
-    border-radius:14px;
-    border:1px dashed rgba(255,215,0,.6);
-    text-align:center;
-    max-width:520px;
-}
-
-footer{
-    margin-top:auto;
-    padding:30px;
-    font-size:.8rem;
-    opacity:.4;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YOLO Slots - Bonus Selection</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            background: linear-gradient(145deg, #0f0f1a, #1a1a2e);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: linear-gradient(145deg, #1a1a2e, #16213e);
+            border-radius: 25px;
+            padding: 40px 35px;
+            margin: 20px auto;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* HEADER */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, #8a2be2, #ff00ff, #00ffff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            color: #a0a8ff;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+        
+        /* INSTRUCTION */
+        .instruction {
+            background: rgba(138, 43, 226, 0.1);
+            border-radius: 18px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: center;
+            border: 2px solid rgba(138, 43, 226, 0.2);
+        }
+        
+        /* BONUS OPTIONS */
+        .bonus-options {
+            margin: 40px 0;
+        }
+        
+        .bonus-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            margin-bottom: 25px;
+            overflow: hidden;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .bonus-card.locked {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+        
+        .card-header {
+            padding: 25px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .card-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .card-icon {
+            font-size: 2.8rem;
+            width: 70px;
+            height: 70px;
+            background: rgba(138, 43, 226, 0.2);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .card-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+        
+        .card-badge {
+            display: inline-block;
+            padding: 6px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+        
+        .click-hint {
+            color: #8a2be2;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            opacity: 0.8;
+        }
+        
+        /* HIDDEN BONUS CONTENT */
+        .bonus-content {
+            display: none;
+            padding: 0 30px 25px;
+        }
+        
+        .bonus-content.show {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .bonus-item {
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .bonus-item i {
+            color: #8a2be2;
+            width: 25px;
+        }
+        
+        /* SELECT BUTTON */
+        .select-btn {
+            background: linear-gradient(90deg, #8a2be2, #ff00ff);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            transition: all 0.3s;
+        }
+        
+        .select-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(138, 43, 226, 0.4);
+        }
+        
+        .select-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        
+        /* REVEALED SECTION */
+        .revealed-section {
+            display: none;
+            margin-top: 50px;
+            padding: 35px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 20px;
+            border: 2px solid #8a2be2;
+            animation: slideUp 0.5s ease;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .revealed-section.show {
+            display: block;
+        }
+        
+        .revealed-title {
+            font-size: 2.2rem;
+            text-align: center;
+            color: #8a2be2;
+            margin-bottom: 25px;
+        }
+        
+        .selected-bonus-box {
+            background: rgba(138, 43, 226, 0.1);
+            border-radius: 18px;
+            padding: 30px;
+            margin: 25px 0;
+        }
+        
+        .screenshot-instruction {
+            background: rgba(0, 255, 255, 0.1);
+            border-radius: 18px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: center;
+            border-left: 5px solid #00ffff;
+        }
+        
+        /* FOOTER */
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #7a86b6;
+            font-size: 0.95rem;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 25px;
+            }
+            
+            .logo {
+                font-size: 2.8rem;
+            }
+            
+            .card-header {
+                padding: 20px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .card-left {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .bonus-content {
+                padding: 0 20px 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 15px 10px;
+            }
+            
+            .container {
+                padding: 25px 20px;
+            }
+            
+            .logo {
+                font-size: 2.4rem;
+            }
+            
+            .card-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 2.2rem;
+            }
+            
+            .card-title {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
 </head>
-
 <body>
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header">
+            <h1 class="logo">YOLO SLOTS</h1>
+            <p class="subtitle">Premium gaming experience with exclusive bonuses.<br>Select your reward below.</p>
+        </div>
+        
+        <!-- INSTRUCTION -->
+        <div class="instruction">
+            <i class="fas fa-star"></i>
+            <strong>Click "SELECT BONUS" button to reveal your chosen bonus</strong>
+            <i class="fas fa-star"></i>
+            <p style="margin-top: 10px; color: #b0b8ff;">Your selection will be locked - choose wisely!</p>
+        </div>
+        
+        <!-- BONUS OPTIONS -->
+        <div class="bonus-options">
+            <!-- OPTION 1: 50% BONUS + FREE PLAY -->
+            <div class="bonus-card">
+                <div class="card-header">
+                    <div class="card-left">
+                        <div class="card-icon">💰</div>
+                        <div>
+                            <div class="card-title">50% Bonus + Free Plays</div>
+                            <span class="card-badge" style="color: #ffd700;">Most Popular</span>
+                            <div class="click-hint">
+                                Click button below to reveal details
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bonus-content" id="bonus-1">
+                    <div class="bonus-item">
+                        <i class="fas fa-wallet"></i>
+                        Deposit $5 – $15
+                    </div>
+                    <div class="bonus-item">
+                        <i class="fas fa-gamepad"></i>
+                        5 Free Plays if you lose
+                    </div>
+                    <div class="bonus-item">
+                        <i class="fas fa-gift"></i>
+                        Redeem up to $250
+                    </div>
+                    <div class="bonus-item">
+                        <i class="fas fa-bolt"></i>
+                        Instant Cashout
+                    </div>
+                </div>
+                
+                <div style="padding: 0 30px 25px;">
+                    <button class="select-btn" onclick="selectAndRevealBonus(1)">
+                        <i class="fas fa-lock-open"></i>
+                        SELECT BONUS
+                    </button>
+                </div>
+            </div>
+            
+            <!-- OPTION 2: 100% DEPOSIT BONUS -->
+            <div class="bonus-card">
+                <div class="card-header">
+                    <div class="card-left">
+                        <div class="card-icon">👑</div>
+                        <div>
+                            <div class="card-title">100% Deposit Bonus</div>
+                            <span class="card-badge" style="color: #c0c0c0;">Premium</span>
+                            <div class="click-hint">
+                                Click button below to reveal details
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bonus-content" id="bonus-2">
+                    <div class="bonus-item">
+                        <i class="fas fa-wallet"></i>
+                        Deposit $5 – $15
+                    </div>
+                    <div class="bonus-item">
+                        <i class="fas fa-percentage"></i>
+                        50% Cashback if you lose
+                    </div>
+                    <div class="bonus-item">
+                        <i class="fas fa-gift"></i>
+                        Redeem up to $300
+                    </div>
+                    <div class="bonus-item">
+                        <i class="fas fa-bolt"></i>
+                        Instant Cashout
+                    </div>
+                </div>
+                
+                <div style="padding: 0 30px 25px;">
+                    <button class="select-btn" onclick="selectAndRevealBonus(2)">
+                        <i class="fas fa-lock-open"></i>
+                        SELECT BONUS
+                    </button>
+                </div>
+            </div>
+            
+            <!-- OPTION 3: 70% HIGH ROLLER BONUS -->
+            <div class="bonus-card">
+                <div class="card-header">
+                    <div class="card-left">
+                        <div class="card-icon">⚡</div>
+                        <div>
+                            <div class="card-title">70% High Roller Bonus</div>
+                            <span class="card-badge" style="color: #00ffff;">Best Value</span>
+                            <div class="click-hint">
+                                Click button below to reveal details
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bonus-content" id="bonus-3">
+                    <div class="bonus-item">
+                        <i class="fas fa-wallet"></i>
+                        Deposit $10 – $40
+                    </div>
+                    <div class="bonus-item">
+                        <i class="fas fa-shield-alt"></i>
+                        $10 Cashback if you lose
+                    </div>
+                    <div class="bonus-item">
+                        <i class="fas fa-gift"></i>
+                        Redeem up to $300
+                    </div>
+                    <div class="bonus-item">
+                        <i class="fas fa-bolt"></i>
+                        Instant Cashout
+                    </div>
+                </div>
+                
+                <div style="padding: 0 30px 25px;">
+                    <button class="select-btn" onclick="selectAndRevealBonus(3)">
+                        <i class="fas fa-lock-open"></i>
+                        SELECT BONUS
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- REVEALED SECTION -->
+        <div class="revealed-section" id="revealedSection">
+            <h2 class="revealed-title">🎉 Your Bonus Is Revealed!</h2>
+            
+            <div class="selected-bonus-box" id="selectedBonus">
+                <!-- Selected bonus will appear here -->
+            </div>
+            
+            <div class="screenshot-instruction">
+                <i class="fas fa-camera fa-2x"></i>
+                <div style="margin-top: 15px;">
+                    <strong style="font-size: 1.4rem;">📸 TAKE SCREENSHOT NOW</strong><br>
+                    <p style="margin-top: 10px; font-size: 1.1rem;">
+                        Send this screenshot to YOLO Slots support team<br>
+                        to claim your bonus instantly!
+                    </p>
+                </div>
+            </div>
+            
+            <div style="text-align: center; color: #a0a8ff; margin-top: 20px;">
+                <i class="fas fa-info-circle"></i> Bonus locked - cannot be changed
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        &copy; <span id="currentYear"></span> YOLO Slots Gaming Platform. 18+ Only.<br>
+        <small style="opacity: 0.8;">Play responsibly. Terms apply.</small>
+    </footer>
 
-<header>
-<h1>YOLO SLOTS</h1>
-<p>Tap once to reveal your mystery bonus</p>
-</header>
-
-<div class="grid">
-
-<!-- CARD 1 -->
-<div class="card">
-<div class="inner">
-<div class="face front">
-<h3>POWER BOOST</h3>
-<button onclick="reveal(this,'#ff00ff')">REVEAL BONUS</button>
-</div>
-<div class="face back">
-<img src="https://cdn-icons-png.flaticon.com/512/891/891462.png">
-<h2>100% Deposit Bonus</h2>
-<ul>
-<li>Deposit $5 – $15</li>
-<li>50% Cashback</li>
-<li>Up to $300</li>
-</ul>
-</div>
-</div>
-</div>
-
-<!-- CARD 2 -->
-<div class="card">
-<div class="inner">
-<div class="face front">
-<h3>SPIN SURGE</h3>
-<button onclick="reveal(this,'#ffd700')">REVEAL BONUS</button>
-</div>
-<div class="face back">
-<img src="https://cdn-icons-png.flaticon.com/512/686/686589.png">
-<h2>Free Spin Bundle</h2>
-<ul>
-<li>5 Free Plays</li>
-<li>Loss Protection</li>
-<li>Fast Cashout</li>
-</ul>
-</div>
-</div>
-</div>
-
-<!-- CARD 3 -->
-<div class="card">
-<div class="inner">
-<div class="face front">
-<h3>VIP VAULT</h3>
-<button onclick="reveal(this,'#00ffff')">REVEAL BONUS</button>
-</div>
-<div class="face back">
-<img src="https://cdn-icons-png.flaticon.com/512/616/616489.png">
-<h2>High Roller Bonus</h2>
-<ul>
-<li>70% Match</li>
-<li>$10 Cashback</li>
-<li>VIP Support</li>
-</ul>
-</div>
-</div>
-</div>
-
-</div>
-
-<div class="note">
-📸 Screenshot the revealed bonus<br>
-👉 Send it to support to activate
-</div>
-
-<footer>
-© 2026 YOLO SLOTS · 18+ Responsible Gaming
-</footer>
-
-<script>
-let picked=false;
-
-function reveal(btn,color){
-    if(picked) return;
-    picked=true;
-
-    const card=btn.closest('.card');
-    card.classList.add('revealed');
-
-    document.querySelectorAll('.card').forEach(c=>{
-        if(c!==card) c.classList.add('locked');
-    });
-
-    confetti({
-        particleCount:120,
-        spread:80,
-        origin:{y:.6},
-        colors:[color,'#ffffff']
-    });
-}
-</script>
-
+    <script>
+        let selectedBonus = null;
+        let isRevealed = false;
+        
+        // Bonus data - EXACTLY AS YOU SPECIFIED
+        const bonuses = {
+            1: {
+                title: "50% Bonus + Free Plays",
+                icon: "💰",
+                details: [
+                    "Deposit $5 – $15",
+                    "5 Free Plays if you lose",
+                    "Redeem up to $250",
+                    "Instant Cashout"
+                ]
+            },
+            2: {
+                title: "100% Deposit Bonus",
+                icon: "👑",
+                details: [
+                    "Deposit $5 – $15",
+                    "50% Cashback if you lose",
+                    "Redeem up to $300",
+                    "Instant Cashout"
+                ]
+            },
+            3: {
+                title: "70% High Roller Bonus",
+                icon: "⚡",
+                details: [
+                    "Deposit $10 – $40",
+                    "$10 Cashback if you lose",
+                    "Redeem up to $300",
+                    "Instant Cashout"
+                ]
+            }
+        };
+        
+        // Select and reveal bonus in ONE CLICK
+        function selectAndRevealBonus(bonusNumber) {
+            if (isRevealed) return;
+            
+            // Hide all bonus contents
+            document.querySelectorAll('.bonus-content').forEach(content => {
+                content.classList.remove('show');
+            });
+            
+            // Disable all buttons
+            document.querySelectorAll('.select-btn').forEach(btn => {
+                btn.disabled = true;
+            });
+            
+            // Show selected bonus content
+            const content = document.getElementById(`bonus-${bonusNumber}`);
+            content.classList.add('show');
+            
+            // Lock all cards
+            document.querySelectorAll('.bonus-card').forEach(card => {
+                card.classList.add('locked');
+            });
+            
+            selectedBonus = bonusNumber;
+            isRevealed = true;
+            
+            // Wait 1 second then show revealed section
+            setTimeout(() => {
+                showRevealedBonus(bonusNumber);
+            }, 1000);
+        }
+        
+        // Show revealed bonus section
+        function showRevealedBonus(bonusNumber) {
+            const bonus = bonuses[bonusNumber];
+            const selectedBonusDiv = document.getElementById('selectedBonus');
+            
+            selectedBonusDiv.innerHTML = `
+                <h3 style="color: #8a2be2; font-size: 1.8rem; margin-bottom: 25px; text-align: center;">
+                    ${bonus.icon} ${bonus.title}
+                </h3>
+                ${bonus.details.map(detail => `
+                    <div class="bonus-item">
+                        <i class="fas fa-check-circle"></i>
+                        ${detail}
+                    </div>
+                `).join('')}
+                <div class="bonus-item" style="margin-top: 20px; background: rgba(138, 43, 226, 0.2);">
+                    <i class="fas fa-star"></i>
+                    <strong>Bonus Code: YOLO${bonusNumber}${Math.floor(1000 + Math.random() * 9000)}</strong>
+                </div>
+            `;
+            
+            // Show revealed section
+            const revealedSection = document.getElementById('revealedSection');
+            revealedSection.classList.add('show');
+            
+            // Scroll to revealed section
+            setTimeout(() => {
+                revealedSection.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start'
+                });
+            }, 300);
+            
+            // Show screenshot alert
+            setTimeout(() => {
+                alert("🎊 BONUS SELECTED!\n\n📸 Please take a screenshot NOW\n\nSend to YOLO Slots support to claim your bonus\n\nBonus will be activated within 15 minutes!");
+            }, 500);
+        }
+        
+        // Set current year
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        // Mobile optimization
+        document.addEventListener('touchstart', function() {}, {passive: true});
+        
+        // Prevent zoom
+        document.addEventListener('gesturestart', function(e) {
+            e.preventDefault();
+        });
+    </script>
 </body>
 </html>
