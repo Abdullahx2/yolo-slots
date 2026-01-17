@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YOLO Slots - Lucky Slot Machine Bonus</title>
+    <title>YOLO Slots - Premium Bonus Selection</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
         
         body {
-            background: linear-gradient(145deg, #1a0033, #330066, #1a0033);
-            color: white;
+            background: #0a0a0f;
+            color: #fff;
             min-height: 100vh;
             padding: 20px;
             display: flex;
@@ -28,267 +28,299 @@
         
         .container {
             width: 100%;
-            max-width: 1100px;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(15px);
-            border-radius: 30px;
-            padding: 40px 35px;
-            border: 3px solid #ff00ff;
-            box-shadow: 0 0 50px rgba(255, 0, 255, 0.3),
-                        inset 0 0 30px rgba(255, 255, 255, 0.1);
-            text-align: center;
-            margin: 20px auto;
+            max-width: 1200px;
+            background: linear-gradient(145deg, #1a1a24, #13131d);
+            border-radius: 32px;
+            padding: 50px 40px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* GRADIENT BACKGROUND */
+        .gradient-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(100, 80, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 100, 200, 0.1) 0%, transparent 50%);
+            z-index: -1;
         }
         
         /* HEADER */
         .header {
-            margin-bottom: 40px;
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
         }
         
         .logo {
-            font-size: 4rem;
-            font-weight: 900;
-            background: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff);
+            font-size: 4.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #8a2be2, #ff00ff, #00ffff);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin-bottom: 15px;
-            letter-spacing: 3px;
-            text-shadow: 0 0 30px rgba(255, 0, 255, 0.5);
-            animation: glow 2s infinite alternate;
-        }
-        
-        @keyframes glow {
-            from { text-shadow: 0 0 20px rgba(255, 0, 255, 0.5); }
-            to { text-shadow: 0 0 30px rgba(255, 0, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.5); }
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+            line-height: 1;
         }
         
         .tagline {
-            font-size: 1.5rem;
-            color: #ff99ff;
+            font-size: 1.4rem;
+            color: #a0a0c0;
             font-weight: 300;
-            letter-spacing: 4px;
-            text-transform: uppercase;
+            letter-spacing: 1px;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
         }
         
-        /* SLOT MACHINE */
-        .slot-machine-container {
-            background: linear-gradient(145deg, #220044, #110022);
-            border-radius: 25px;
-            padding: 40px;
-            margin: 40px 0;
-            border: 5px solid #ff00ff;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7),
-                        inset 0 0 40px rgba(255, 0, 255, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .slot-machine {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin: 30px 0 50px;
-            perspective: 1000px;
-        }
-        
-        @media (max-width: 768px) {
-            .slot-machine {
-                gap: 15px;
-            }
-        }
-        
-        .slot-reel {
-            width: 180px;
-            height: 280px;
-            background: linear-gradient(145deg, #330066, #220044);
+        /* INSTRUCTION */
+        .instruction {
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 20px;
-            overflow: hidden;
-            position: relative;
-            border: 5px solid #00ffff;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            padding: 25px 35px;
+            margin: 40px auto;
+            max-width: 700px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        .instruction-text {
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+        
+        /* BONUS CARDS GRID */
+        .bonus-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
         }
         
         @media (max-width: 768px) {
-            .slot-reel {
-                width: 120px;
-                height: 200px;
+            .bonus-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
             }
-        }
-        
-        @media (max-width: 480px) {
-            .slot-reel {
-                width: 100px;
-                height: 180px;
-            }
-        }
-        
-        .reel-strip {
-            position: absolute;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.1s linear;
-        }
-        
-        .reel-item {
-            width: 100%;
-            height: 280px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            background: rgba(255, 255, 255, 0.05);
-            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        @media (max-width: 768px) {
-            .reel-item {
-                height: 200px;
-                font-size: 3rem;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .reel-item {
-                height: 180px;
-                font-size: 2.5rem;
-            }
-        }
-        
-        /* REEL SYMBOLS */
-        .symbol-1 { background: linear-gradient(145deg, #ff00ff, #cc00cc); }
-        .symbol-2 { background: linear-gradient(145deg, #00ffff, #00cccc); }
-        .symbol-3 { background: linear-gradient(145deg, #ffff00, #cccc00); }
-        .symbol-4 { background: linear-gradient(145deg, #00ff00, #00cc00); }
-        .symbol-5 { background: linear-gradient(145deg, #ff9900, #cc7700); }
-        
-        .spin-btn {
-            background: linear-gradient(145deg, #ff00ff, #00ffff);
-            color: #1a0033;
-            border: none;
-            padding: 25px 70px;
-            border-radius: 60px;
-            font-size: 1.8rem;
-            font-weight: 900;
-            cursor: pointer;
-            margin: 30px 0;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 25px;
-            box-shadow: 0 15px 40px rgba(255, 0, 255, 0.5),
-                        0 0 30px rgba(0, 255, 255, 0.5);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .spin-btn:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 20px 50px rgba(255, 0, 255, 0.7),
-                        0 0 40px rgba(0, 255, 255, 0.7);
-        }
-        
-        .spin-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none !important;
-        }
-        
-        /* PAYLINE */
-        .payline {
-            position: absolute;
-            top: 50%;
-            left: 50px;
-            right: 50px;
-            height: 4px;
-            background: #ffff00;
-            transform: translateY(-50%);
-            z-index: 10;
-            box-shadow: 0 0 20px #ffff00;
-            border-radius: 2px;
-        }
-        
-        /* BONUS DISPLAY */
-        .bonus-display {
-            display: none;
-            margin-top: 50px;
-            padding: 40px;
-            background: rgba(0, 0, 0, 0.6);
-            border-radius: 25px;
-            border: 3px solid #ffff00;
-            animation: reveal 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
-        
-        @keyframes reveal {
-            0% { transform: scale(0); opacity: 0; }
-            70% { transform: scale(1.1); opacity: 1; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        
-        .bonus-display.show {
-            display: block;
-        }
-        
-        .bonus-title {
-            font-size: 2.5rem;
-            color: #ffff00;
-            margin-bottom: 30px;
-            text-shadow: 0 0 20px rgba(255, 255, 0, 0.5);
         }
         
         .bonus-card {
-            background: linear-gradient(145deg, rgba(255, 0, 255, 0.1), rgba(0, 255, 255, 0.1));
-            border-radius: 20px;
-            padding: 35px;
-            margin: 25px 0;
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+            border-radius: 24px;
+            padding: 40px 35px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
         
-        .bonus-name {
-            font-size: 2.2rem;
-            color: #00ffff;
+        .bonus-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        }
+        
+        .bonus-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(138, 43, 226, 0) 0%,
+                rgba(138, 43, 226, 0.05) 50%,
+                rgba(138, 43, 226, 0) 100%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .bonus-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(138, 43, 226, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+        }
+        
+        .bonus-card:hover::after {
+            opacity: 1;
+        }
+        
+        .bonus-card.selected {
+            border-color: #8a2be2;
+            box-shadow: 0 20px 40px rgba(138, 43, 226, 0.2);
+            background: linear-gradient(145deg, rgba(138, 43, 226, 0.1), rgba(255, 0, 255, 0.05));
+        }
+        
+        .bonus-card.locked {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        
+        /* CARD CONTENT */
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
             margin-bottom: 25px;
+        }
+        
+        .card-icon {
+            font-size: 3.5rem;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
+        }
+        
+        .card-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.3;
+        }
+        
+        .card-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(138, 43, 226, 0.2);
+            color: #d0a5ff;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 10px;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+        }
+        
+        .card-details {
+            flex-grow: 1;
+            margin-bottom: 30px;
+        }
+        
+        .detail-item {
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+        
+        .detail-item i {
+            color: #8a2be2;
+            width: 24px;
+            font-size: 1.2rem;
+        }
+        
+        .select-button {
+            background: linear-gradient(135deg, #8a2be2, #ff00ff);
+            color: white;
+            border: none;
+            padding: 18px 30px;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 20px;
+            gap: 12px;
+            margin-top: auto;
+            box-shadow: 0 10px 25px rgba(138, 43, 226, 0.3);
         }
         
-        .bonus-detail {
-            padding: 18px 25px;
-            margin: 15px 0;
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 15px;
+        .select-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(138, 43, 226, 0.4);
+        }
+        
+        /* REVEAL SECTION */
+        .reveal-section {
+            display: none;
+            margin-top: 60px;
+            padding: 50px;
+            background: linear-gradient(145deg, rgba(20, 20, 30, 0.9), rgba(15, 15, 25, 0.95));
+            border-radius: 28px;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            animation: fadeInUp 0.8s cubic-bezier(0.215, 0.610, 0.355, 1);
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .reveal-section.show {
+            display: block;
+        }
+        
+        .reveal-header {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 40px;
+            color: #fff;
             display: flex;
             align-items: center;
-            gap: 20px;
-            font-size: 1.3rem;
-            border-left: 4px solid #ff00ff;
+            justify-content: center;
+            gap: 25px;
         }
         
-        .bonus-detail i {
-            color: #ff00ff;
-            font-size: 1.4rem;
-            width: 30px;
+        .reveal-icon {
+            font-size: 3rem;
+            background: linear-gradient(135deg, #8a2be2, #ff00ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
         
-        /* SCREENSHOT SECTION */
-        .screenshot-box {
-            background: linear-gradient(145deg, rgba(255, 0, 255, 0.2), rgba(0, 255, 255, 0.2));
+        .selected-bonus {
+            background: rgba(255, 255, 255, 0.02);
             border-radius: 20px;
-            padding: 30px;
-            margin: 35px 0;
-            border: 2px solid rgba(255, 255, 0, 0.5);
+            padding: 40px;
+            margin: 30px 0;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .selected-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: #8a2be2;
             text-align: center;
+        }
+        
+        /* SCREENSHOT INSTRUCTION */
+        .screenshot-box {
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(138, 43, 226, 0.1));
+            border-radius: 20px;
+            padding: 35px;
+            margin: 40px 0;
+            text-align: center;
+            border: 1px solid rgba(0, 255, 255, 0.2);
         }
         
         .screenshot-title {
             font-size: 1.8rem;
-            color: #ffff00;
+            color: #00ffff;
             margin-bottom: 20px;
             display: flex;
             align-items: center;
@@ -296,58 +328,91 @@
             gap: 20px;
         }
         
-        /* WIN EFFECTS */
-        .win-effect {
-            position: fixed;
-            pointer-events: none;
-            z-index: 1000;
-            opacity: 0;
+        .screenshot-steps {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .step {
+            flex: 1;
+            min-width: 200px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 25px 20px;
+            text-align: center;
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #00ffff, #8a2be2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 15px;
         }
         
         /* FOOTER */
         footer {
-            margin-top: 50px;
-            color: #ff99ff;
-            font-size: 1rem;
+            margin-top: 60px;
+            color: #666680;
+            font-size: 0.95rem;
             text-align: center;
-            padding-top: 25px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
             width: 100%;
+            line-height: 1.6;
         }
         
         /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 40px 30px;
+            }
+            
+            .logo {
+                font-size: 3.5rem;
+            }
+        }
+        
         @media (max-width: 768px) {
             .container {
                 padding: 30px 25px;
+                border-radius: 25px;
             }
             
             .logo {
                 font-size: 3rem;
             }
             
-            .slot-machine-container {
-                padding: 25px 20px;
+            .bonus-card {
+                padding: 30px 25px;
             }
             
-            .spin-btn {
-                padding: 20px 40px;
-                font-size: 1.5rem;
+            .reveal-section {
+                padding: 35px 30px;
             }
             
-            .bonus-title {
-                font-size: 2rem;
-            }
-            
-            .bonus-name {
-                font-size: 1.8rem;
+            .screenshot-steps {
                 flex-direction: column;
-                text-align: center;
+                align-items: center;
+            }
+            
+            .step {
+                width: 100%;
+                max-width: 300px;
             }
         }
         
         @media (max-width: 480px) {
             body {
-                padding: 15px 10px;
+                padding: 15px;
             }
             
             .container {
@@ -358,136 +423,233 @@
                 font-size: 2.5rem;
             }
             
-            .spin-btn {
-                padding: 18px 30px;
-                font-size: 1.3rem;
-                gap: 15px;
+            .instruction {
+                padding: 20px;
             }
             
-            .slot-reel {
-                width: 90px;
-                height: 160px;
+            .instruction-text {
+                font-size: 1.2rem;
             }
             
-            .reel-item {
-                height: 160px;
-                font-size: 2rem;
+            .card-icon {
+                font-size: 2.8rem;
+            }
+            
+            .card-title {
+                font-size: 1.5rem;
             }
         }
         
-        /* ANIMATIONS */
-        @keyframes spin {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-1000px); }
+        /* SMOOTH SCROLL */
+        html {
+            scroll-behavior: smooth;
         }
         
-        @keyframes winPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+        /* SELECTION ANIMATION */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(138, 43, 226, 0.4); }
+            70% { box-shadow: 0 0 0 20px rgba(138, 43, 226, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(138, 43, 226, 0); }
         }
         
-        .win-pulse {
-            animation: winPulse 0.5s infinite;
+        .selected .select-button {
+            animation: pulse 2s infinite;
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="gradient-bg"></div>
+        
         <!-- HEADER -->
         <div class="header">
             <h1 class="logo">YOLO SLOTS</h1>
-            <p class="tagline">You Only Live Once - Spin to Win!</p>
+            <p class="tagline">Premium gaming experience with exclusive bonuses. Select your reward below.</p>
         </div>
         
-        <!-- SLOT MACHINE -->
-        <div class="slot-machine-container">
-            <div class="payline"></div>
-            
-            <div class="slot-machine">
-                <div class="slot-reel">
-                    <div class="reel-strip" id="reel1">
-                        <!-- Symbols will be added by JS -->
+        <!-- INSTRUCTION -->
+        <div class="instruction">
+            <p class="instruction-text">
+                <i class="fas fa-star" style="color: #8a2be2;"></i>
+                Choose ONE bonus package that suits your play style
+                <i class="fas fa-star" style="color: #8a2be2;"></i>
+            </p>
+            <p style="color: #a0a0c0; font-size: 1rem;">Your selection will be locked - choose wisely!</p>
+        </div>
+        
+        <!-- BONUS CARDS -->
+        <div class="bonus-grid">
+            <!-- CARD 1 -->
+            <div class="bonus-card" onclick="selectBonus(1)">
+                <div class="card-header">
+                    <div class="card-icon">💰</div>
+                    <div>
+                        <h3 class="card-title">Cash Spree Package</h3>
+                        <span class="card-badge">Most Popular</span>
                     </div>
                 </div>
                 
-                <div class="slot-reel">
-                    <div class="reel-strip" id="reel2">
-                        <!-- Symbols will be added by JS -->
+                <div class="card-details">
+                    <div class="detail-item">
+                        <i class="fas fa-coins"></i>
+                        50% Bonus on next Deposit $5 – $15
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-gamepad"></i>
+                        5 Free Plays if you lose
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-gift"></i>
+                        Redeem up to $250
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-bolt"></i>
+                        Instant Cashout
                     </div>
                 </div>
                 
-                <div class="slot-reel">
-                    <div class="reel-strip" id="reel3">
-                        <!-- Symbols will be added by JS -->
-                    </div>
-                </div>
+                <button class="select-button" onclick="event.stopPropagation(); confirmSelection(1)">
+                    <i class="fas fa-check-circle"></i>
+                    Select This Bonus
+                </button>
             </div>
             
-            <button class="spin-btn" id="spinBtn" onclick="spinSlotMachine()">
-                <i class="fas fa-play-circle"></i>
-                <span>PULL THE LEVER!</span>
-            </button>
+            <!-- CARD 2 -->
+            <div class="bonus-card" onclick="selectBonus(2)">
+                <div class="card-header">
+                    <div class="card-icon">👑</div>
+                    <div>
+                        <h3 class="card-title">High Roller Package</h3>
+                        <span class="card-badge">Premium</span>
+                    </div>
+                </div>
+                
+                <div class="card-details">
+                    <div class="detail-item">
+                        <i class="fas fa-crown"></i>
+                        70% Bonus on next Deposit $10 – $40
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-shield-alt"></i>
+                        $10 Cashback if you lose
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-gem"></i>
+                        Redeem up to $300
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-rocket"></i>
+                        Priority Cashout
+                    </div>
+                </div>
+                
+                <button class="select-button" onclick="event.stopPropagation(); confirmSelection(2)">
+                    <i class="fas fa-check-circle"></i>
+                    Select This Bonus
+                </button>
+            </div>
             
-            <div style="color: #ff99ff; font-size: 1.2rem; margin-top: 20px;">
-                <i class="fas fa-info-circle"></i> Spin to reveal your random bonus!
+            <!-- CARD 3 -->
+            <div class="bonus-card" onclick="selectBonus(3)">
+                <div class="card-header">
+                    <div class="card-icon">⚡</div>
+                    <div>
+                        <h3 class="card-title">Mega Boost Package</h3>
+                        <span class="card-badge">Best Value</span>
+                    </div>
+                </div>
+                
+                <div class="card-details">
+                    <div class="detail-item">
+                        <i class="fas fa-bolt"></i>
+                        100% Bonus on next Deposit $5 – $15
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-percentage"></i>
+                        50% Cashback if you lose
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-trophy"></i>
+                        Redeem up to $300
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-hourglass-start"></i>
+                        Instant Processing
+                    </div>
+                </div>
+                
+                <button class="select-button" onclick="event.stopPropagation(); confirmSelection(3)">
+                    <i class="fas fa-check-circle"></i>
+                    Select This Bonus
+                </button>
             </div>
         </div>
         
-        <!-- BONUS DISPLAY -->
-        <div class="bonus-display" id="bonusDisplay">
-            <h2 class="bonus-title">
-                <i class="fas fa-trophy"></i>
-                <span>JACKPOT! BONUS REVEALED</span>
-                <i class="fas fa-trophy"></i>
+        <!-- REVEAL SECTION -->
+        <div class="reveal-section" id="revealSection">
+            <h2 class="reveal-header">
+                <i class="fas fa-gem reveal-icon"></i>
+                <span>Bonus Confirmed!</span>
+                <i class="fas fa-gem reveal-icon"></i>
             </h2>
             
-            <div class="bonus-card" id="bonusCard">
-                <!-- Bonus will appear here -->
+            <div class="selected-bonus" id="selectedBonus">
+                <!-- Selected bonus will appear here -->
             </div>
             
             <div class="screenshot-box">
                 <h3 class="screenshot-title">
-                    <i class="fas fa-camera fa-2x"></i>
-                    <span>TAKE SCREENSHOT TO CLAIM</span>
+                    <i class="fas fa-camera"></i>
+                    <span>Claim Your Bonus</span>
                 </h3>
-                <p style="font-size: 1.3rem; margin: 15px 0;">
-                    📸 <strong>Capture this screen</strong> and send to YOLO Slots support<br>
-                    Your bonus will be activated within 10 minutes!
+                <p style="font-size: 1.3rem; color: #a0a0c0; margin-bottom: 10px;">
+                    Take a screenshot and send to our support team
                 </p>
-                <div style="background: rgba(255, 255, 0, 0.1); padding: 15px; border-radius: 10px; margin-top: 20px;">
-                    <i class="fas fa-clock"></i> <strong>Valid for 24 hours only!</strong>
+                
+                <div class="screenshot-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h4>Capture Screen</h4>
+                        <p style="color: #a0a0c0; font-size: 0.95rem; margin-top: 10px;">
+                            Press Volume + Power buttons (mobile) or PrtScn (PC)
+                        </p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h4>Send to Support</h4>
+                        <p style="color: #a0a0c0; font-size: 0.95rem; margin-top: 10px;">
+                            Share the screenshot with YOLO Slots support team
+                        </p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h4>Receive Bonus</h4>
+                        <p style="color: #a0a0c0; font-size: 0.95rem; margin-top: 10px;">
+                            Your bonus will be activated within 15 minutes
+                        </p>
+                    </div>
                 </div>
             </div>
             
-            <div style="text-align: center; color: #ff99ff; margin-top: 25px; font-size: 1.1rem;">
-                <i class="fas fa-lock"></i> Bonus locked to your account
+            <div style="text-align: center; color: #666680; margin-top: 30px; font-size: 1rem;">
+                <i class="fas fa-info-circle"></i> This bonus is non-transferable and valid for 24 hours
             </div>
         </div>
     </div>
     
     <footer>
-        &copy; <span id="currentYear"></span> YOLO Slots Gaming Platform. 18+ Only.<br>
-        <small style="opacity: 0.8;">Spin responsibly. Terms and conditions apply.</small>
+        &copy; <span id="currentYear"></span> YOLO Slots. For players 18+ only.<br>
+        <small style="opacity: 0.7;">Gamble responsibly. Terms and conditions apply.</small>
     </footer>
 
     <script>
-        // Bonus data for YOLO Slots
-        const bonuses = [
-            {
-                name: "🎰 MEGA SPINS BONUS",
-                symbol: "🎰",
-                color: "#ff00ff",
-                details: [
-                    "100% Bonus on next Deposit $5 – $15",
-                    "50% Cashback if you lose",
-                    "Redeem up to $300",
-                    "Instant Cashout"
-                ]
-            },
-            {
-                name: "💰 CASH SPREE BONUS",
-                symbol: "💰",
-                color: "#ffff00",
+        // Bonus data
+        const bonuses = {
+            1: {
+                title: "💰 Cash Spree Package",
+                icon: "💰",
                 details: [
                     "50% Bonus on next Deposit $5 – $15",
                     "5 Free Plays if you lose",
@@ -495,201 +657,130 @@
                     "Instant Cashout"
                 ]
             },
-            {
-                name: "👑 HIGH ROLLER BONUS",
-                symbol: "👑",
-                color: "#00ffff",
+            2: {
+                title: "👑 High Roller Package",
+                icon: "👑",
                 details: [
                     "70% Bonus on next Deposit $10 – $40",
                     "$10 Cashback if you lose",
                     "Redeem up to $300",
-                    "Instant Cashout"
+                    "Priority Cashout"
+                ]
+            },
+            3: {
+                title: "⚡ Mega Boost Package",
+                icon: "⚡",
+                details: [
+                    "100% Bonus on next Deposit $5 – $15",
+                    "50% Cashback if you lose",
+                    "Redeem up to $300",
+                    "Instant Processing"
                 ]
             }
-        ];
-        
-        // Symbol mapping to bonuses
-        const symbolMap = {
-            "🎰": 0, // MEGA SPINS
-            "💰": 1, // CASH SPREE
-            "👑": 2, // HIGH ROLLER
-            "💎": 0, // Extra symbols map to bonuses
-            "⭐": 1,
-            "🔥": 2,
-            "✨": 0,
-            "🍀": 1
         };
         
-        const symbols = ["🎰", "💰", "👑", "💎", "⭐", "🔥", "✨", "🍀"];
-        let isSpinning = false;
-        let hasSpun = false;
+        let selectedBonus = null;
+        let isRevealed = false;
         
-        // Initialize reels
-        function initReels() {
-            const reels = [document.getElementById('reel1'), document.getElementById('reel2'), document.getElementById('reel3')];
+        // Select bonus
+        function selectBonus(bonusNumber) {
+            if (isRevealed) return;
             
-            reels.forEach((reel, index) => {
-                reel.innerHTML = '';
-                // Create 20 symbols for smooth spinning
-                for (let i = 0; i < 20; i++) {
-                    const symbolIndex = Math.floor(Math.random() * symbols.length);
-                    const symbol = symbols[symbolIndex];
-                    const symbolDiv = document.createElement('div');
-                    symbolDiv.className = `reel-item symbol-${(symbolIndex % 5) + 1}`;
-                    symbolDiv.textContent = symbol;
-                    symbolDiv.style.height = (window.innerWidth <= 768 ? (window.innerWidth <= 480 ? '180px' : '200px') : '280px');
-                    reel.appendChild(symbolDiv);
-                }
+            // Remove selection from all cards
+            document.querySelectorAll('.bonus-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Add selection to clicked card
+            const selectedCard = document.querySelector(`.bonus-card:nth-child(${bonusNumber})`);
+            selectedCard.classList.add('selected');
+            
+            selectedBonus = bonusNumber;
+            
+            // Auto scroll to show card
+            selectedCard.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center',
+                inline: 'nearest'
             });
         }
         
-        // Spin the slot machine
-        function spinSlotMachine() {
-            if (isSpinning || hasSpun) return;
+        // Confirm selection
+        function confirmSelection(bonusNumber) {
+            if (!selectedBonus || selectedBonus !== bonusNumber) {
+                selectBonus(bonusNumber);
+                setTimeout(() => confirmSelection(bonusNumber), 300);
+                return;
+            }
             
-            isSpinning = true;
-            const spinBtn = document.getElementById('spinBtn');
-            spinBtn.disabled = true;
-            spinBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>SPINNING...</span>';
+            if (isRevealed) return;
             
-            const reels = [
-                document.getElementById('reel1'),
-                document.getElementById('reel2'),
-                document.getElementById('reel3')
-            ];
-            
-            // Random bonus selection
-            const selectedBonusIndex = Math.floor(Math.random() * bonuses.length);
-            const selectedBonus = bonuses[selectedBonusIndex];
-            
-            // Find symbols that match this bonus
-            const matchingSymbols = symbols.filter(sym => symbolMap[sym] === selectedBonusIndex);
-            const targetSymbol = matchingSymbols[0];
-            
-            // Random reel positions that will land on matching symbols
-            const reelPositions = [
-                Math.floor(Math.random() * 20),
-                Math.floor(Math.random() * 20),
-                Math.floor(Math.random() * 20)
-            ];
-            
-            // Ensure at least one reel shows the target symbol
-            reelPositions[Math.floor(Math.random() * 3)] = symbols.indexOf(targetSymbol) % 20;
-            
-            // Spin each reel
-            reels.forEach((reel, reelIndex) => {
-                const startPosition = Math.floor(Math.random() * 20);
-                const targetPosition = reelPositions[reelIndex];
-                
-                // Calculate spin distance (extra spins + target position)
-                const spinDistance = (20 * 5) + targetPosition; // 5 full spins + target
-                
-                // Apply spinning animation
-                reel.style.transition = 'transform 0.1s linear';
-                reel.style.transform = `translateY(-${startPosition * (window.innerWidth <= 768 ? (window.innerWidth <= 480 ? 180 : 200) : 280)}px)`;
-                
-                // Start spinning
-                setTimeout(() => {
-                    reel.style.transition = 'transform 3s cubic-bezier(0.1, 0.2, 0.3, 1)';
-                    reel.style.transform = `translateY(-${spinDistance * (window.innerWidth <= 768 ? (window.innerWidth <= 480 ? 180 : 200) : 280)}px)`;
-                }, 100 * (reelIndex + 1));
+            // Lock all cards
+            document.querySelectorAll('.bonus-card').forEach(card => {
+                card.classList.add('locked');
             });
             
-            // Stop spinning and reveal bonus
-            setTimeout(() => {
-                isSpinning = false;
-                revealBonus(selectedBonus);
-                createWinEffects();
-                spinBtn.innerHTML = '<i class="fas fa-check"></i> <span>BONUS REVEALED!</span>';
-            }, 3500);
+            // Show reveal section
+            showRevealSection(bonusNumber);
+            isRevealed = true;
         }
         
-        // Reveal the selected bonus
-        function revealBonus(bonus) {
-            const bonusCard = document.getElementById('bonusCard');
+        // Show reveal section
+        function showRevealSection(bonusNumber) {
+            const bonus = bonuses[bonusNumber];
+            const selectedBonusDiv = document.getElementById('selectedBonus');
             
-            bonusCard.innerHTML = `
-                <div class="bonus-name" style="color: ${bonus.color}">
-                    ${bonus.symbol} ${bonus.name}
-                </div>
+            selectedBonusDiv.innerHTML = `
+                <h3 class="selected-title">${bonus.icon} ${bonus.title}</h3>
                 ${bonus.details.map(detail => `
-                    <div class="bonus-detail">
-                        <i class="fas fa-star"></i>
-                        <span>${detail}</span>
+                    <div class="detail-item">
+                        <i class="fas fa-check"></i>
+                        ${detail}
                     </div>
                 `).join('')}
+                <div style="margin-top: 25px; padding: 20px; background: rgba(138, 43, 226, 0.1); border-radius: 15px; text-align: center;">
+                    <i class="fas fa-clock"></i> <strong>Valid for 24 hours from selection</strong>
+                </div>
             `;
             
-            // Show bonus display
-            const bonusDisplay = document.getElementById('bonusDisplay');
-            bonusDisplay.classList.add('show');
+            // Show reveal section
+            const revealSection = document.getElementById('revealSection');
+            revealSection.classList.add('show');
             
-            // Scroll to bonus
+            // Scroll to reveal section
             setTimeout(() => {
-                bonusDisplay.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 500);
-            
-            // Show screenshot alert
-            setTimeout(() => {
-                alert("🎊 JACKPOT! 🎊\n\nYou won: " + bonus.name + "\n\n📸 TAKE SCREENSHOT NOW!\n\nSend to YOLO Slots support to claim your bonus!");
-            }, 800);
-            
-            hasSpun = true;
-        }
-        
-        // Create win effects
-        function createWinEffects() {
-            // Create particle effects
-            for (let i = 0; i < 100; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'win-effect';
-                particle.style.position = 'fixed';
-                particle.style.left = Math.random() * 100 + 'vw';
-                particle.style.top = Math.random() * 100 + 'vh';
-                particle.style.width = Math.random() * 30 + 10 + 'px';
-                particle.style.height = particle.style.width;
-                particle.style.background = `radial-gradient(circle, ${['#ff00ff', '#00ffff', '#ffff00', '#ff9900'][Math.floor(Math.random() * 4)]}, transparent)`;
-                particle.style.borderRadius = '50%';
-                particle.style.opacity = '0.8';
-                particle.style.zIndex = '9999';
-                document.body.appendChild(particle);
-                
-                // Animate particle
-                particle.animate([
-                    { transform: 'scale(0) rotate(0deg)', opacity: 1 },
-                    { transform: `scale(1) rotate(${Math.random() * 360}deg) translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 - 100}px)`, opacity: 0 }
-                ], {
-                    duration: Math.random() * 2000 + 1000,
-                    easing: 'cubic-bezier(0.215, 0.610, 0.355, 1)'
+                revealSection.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start'
                 });
-                
-                // Remove after animation
-                setTimeout(() => particle.remove(), 3000);
-            }
+            }, 300);
             
-            // Add win sound effect (optional placeholder)
-            if (typeof Audio !== 'undefined') {
-                // You can add actual sound file here
-                console.log("Win sound effect played!");
-            }
+            // Show screenshot instructions
+            setTimeout(() => {
+                alert("🎉 BONUS SELECTED!\n\n📸 Please take a screenshot now\n\nSend to YOLO Slots support to claim your bonus\n\nBonus will be activated within 15 minutes!");
+            }, 500);
         }
         
-        // Initialize on load
-        window.onload = function() {
-            initReels();
-            document.getElementById('currentYear').textContent = new Date().getFullYear();
-            
-            // Touch device optimization
-            document.addEventListener('touchstart', function() {}, {passive: true});
-            
-            // Prevent zoom
-            document.addEventListener('gesturestart', function(e) {
-                e.preventDefault();
-            });
-        };
+        // Set current year
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
         
-        // Adjust reel heights on resize
-        window.onresize = initReels;
+        // Mobile touch optimization
+        document.addEventListener('touchstart', function() {}, {passive: true});
+        
+        // Prevent zoom on mobile
+        document.addEventListener('gesturestart', function(e) {
+            e.preventDefault();
+        });
+        
+        // Initialize with smooth loading
+        window.addEventListener('load', function() {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.3s';
+            
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
     </script>
 </body>
 </html>
