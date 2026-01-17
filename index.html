@@ -1,235 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>YOLO SLOTS - Premium Experience</title>
-
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
-<style>
-:root{
---gold:#ffd700;
---pink:#ff00ff;
---blue:#00ffff;
-}
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Roboto,sans-serif}
-
-body{
-min-height:100vh;
-background:radial-gradient(circle at center,#1a1a2e 0%,#0a0a12 100%);
-color:#fff;
-overflow-x:hidden;
-display:flex;
-flex-direction:column;
-align-items:center;
-}
-
-#casino-bg{
-position:fixed;
-inset:0;
-z-index:-1;
-background:
-linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)),
-url('https://images.unsplash.com/photo-1596838132731-dd96238fd1e9?auto=format&fit=crop&q=80&w=2000');
-background-size:cover;
-background-position:center;
-}
-
-.header{text-align:center;padding:50px 20px}
-.header h1{
-font-size:clamp(2.5rem,8vw,5rem);
-letter-spacing:10px;
-background:linear-gradient(to bottom,#fff 20%,var(--gold) 50%,#b8860b 80%);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-text-shadow:0 0 15px rgba(255,215,0,.5);
-}
-
-.promo-badge{
-background:var(--pink);
-padding:6px 22px;
-border-radius:50px;
-font-weight:700;
-box-shadow:0 0 15px var(--pink);
-display:inline-block;
-margin-bottom:15px;
-}
-
-.gifts-grid{
-display:flex;
-gap:40px;
-flex-wrap:wrap;
-justify-content:center;
-padding:40px;
-max-width:1200px;
-}
-
-.gift{
-width:300px;
-height:400px;
-}
-
-.gift-inner{
-width:100%;
-height:100%;
-border-radius:20px;
-border:2px solid var(--gold);
-background:linear-gradient(135deg,#1b1b1b,#000);
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-box-shadow:0 0 30px rgba(0,0,0,.5);
-text-align:center;
-padding:20px;
-}
-
-.mystery-icon{
-width:110px;
-height:110px;
-margin-bottom:20px;
-filter:drop-shadow(0 0 12px var(--gold));
-}
-
-.reveal-btn{
-margin-top:20px;
-padding:12px 28px;
-border-radius:30px;
-border:2px solid var(--gold);
-background:transparent;
-color:var(--gold);
-font-weight:700;
-letter-spacing:1px;
-cursor:pointer;
-}
-
-.reveal-btn:active{transform:scale(.96)}
-
-.result{
-display:none;
-}
-
-.gift.revealed .mystery,
-.gift.revealed .reveal-btn{
-display:none;
-}
-
-.gift.revealed .result{
-display:block;
-}
-
-@media(max-width:768px){
-.gift{width:260px;height:auto}
-.header h1{letter-spacing:4px}
-}
-</style>
-</head>
-
-<body>
-
-<div id="casino-bg"></div>
-
-<div class="header">
-<div class="promo-badge">EXCLUSIVE BONUS</div>
-<h1>YOLO SLOTS</h1>
-<p>Choose one mystery box to reveal your reward</p>
-</div>
-
-<div class="gifts-grid">
+<!-- FRONT (HIDDEN STATE ICONS & TITLES) -->
 
 <!-- BONUS 1 -->
 <div class="gift" data-color="#ff00ff">
-<div class="gift-inner">
+  <div class="gift-inner">
 
-<div class="mystery">
-<img src="https://cdn-icons-png.flaticon.com/512/1055/1055646.png" class="mystery-icon">
-<h3>MYSTERY BONUS</h3>
-<p>Tap to reveal your reward</p>
-</div>
+    <div class="mystery">
+      <img src="https://cdn-icons-png.flaticon.com/512/3649/3649460.png" class="mystery-icon">
+      <h3>MYSTERY BOOST</h3>
+      <p>Tap to reveal your reward</p>
+    </div>
 
-<button class="reveal-btn">REVEAL BONUS</button>
+    <button class="reveal-btn">REVEAL BONUS</button>
 
-<div class="result">
-<img src="https://cdn-icons-png.flaticon.com/512/261/261947.png" class="mystery-icon">
-<h2 style="color:#ff00ff">100% Deposit Bonus</h2>
-<p>Deposit $5–$15<br>50% Cashback if you lose<br>Redeem up to $300<br>Instant Cashout</p>
-<p>📸 Screenshot & send to support</p>
-</div>
+    <div class="result">
+      <img src="https://cdn-icons-png.flaticon.com/512/261/261947.png" class="mystery-icon">
+      <h2 style="color:#ff00ff">100% Deposit Bonus</h2>
+      <p>Deposit $5–$15<br>50% Cashback if you lose<br>Redeem up to $300<br>Instant Cashout</p>
+      <p>📸 Screenshot & send to support</p>
+    </div>
 
-</div>
+  </div>
 </div>
 
 <!-- BONUS 2 -->
 <div class="gift" data-color="#ffd700">
-<div class="gift-inner">
+  <div class="gift-inner">
 
-<div class="mystery">
-<img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" class="mystery-icon">
-<h3>MYSTERY BONUS</h3>
-<p>Tap to reveal your reward</p>
-</div>
+    <div class="mystery">
+      <img src="https://cdn-icons-png.flaticon.com/512/684/684908.png" class="mystery-icon">
+      <h3>MYSTERY SPIN</h3>
+      <p>Tap to reveal your reward</p>
+    </div>
 
-<button class="reveal-btn">REVEAL BONUS</button>
+    <button class="reveal-btn">REVEAL BONUS</button>
 
-<div class="result">
-<img src="https://cdn-icons-png.flaticon.com/512/2150/2150150.png" class="mystery-icon">
-<h2 style="color:#ffd700">50% Bonus + Free Plays</h2>
-<p>Deposit $5–$15<br>5 Free Plays if you lose<br>Redeem up to $250<br>Instant Cashout</p>
-<p>📸 Screenshot & send to support</p>
-</div>
+    <div class="result">
+      <img src="https://cdn-icons-png.flaticon.com/512/2150/2150150.png" class="mystery-icon">
+      <h2 style="color:#ffd700">50% Bonus + Free Plays</h2>
+      <p>Deposit $5–$15<br>5 Free Plays if you lose<br>Redeem up to $250<br>Instant Cashout</p>
+      <p>📸 Screenshot & send to support</p>
+    </div>
 
-</div>
+  </div>
 </div>
 
 <!-- BONUS 3 -->
 <div class="gift" data-color="#00ffff">
-<div class="gift-inner">
+  <div class="gift-inner">
 
-<div class="mystery">
-<img src="https://cdn-icons-png.flaticon.com/512/833/833524.png" class="mystery-icon">
-<h3>MYSTERY BONUS</h3>
-<p>Tap to reveal your reward</p>
+    <div class="mystery">
+      <img src="https://cdn-icons-png.flaticon.com/512/2621/2621138.png" class="mystery-icon">
+      <h3>MYSTERY VAULT</h3>
+      <p>Tap to reveal your reward</p>
+    </div>
+
+    <button class="reveal-btn">REVEAL BONUS</button>
+
+    <div class="result">
+      <img src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png" class="mystery-icon">
+      <h2 style="color:#00ffff">70% High Roller Bonus</h2>
+      <p>Deposit $10–$40<br>$10 Cashback if you lose<br>Redeem up to $300<br>Instant Cashout</p>
+      <p>📸 Screenshot & send to support</p>
+    </div>
+
+  </div>
 </div>
-
-<button class="reveal-btn">REVEAL BONUS</button>
-
-<div class="result">
-<img src="https://cdn-icons-png.flaticon.com/512/3209/3209129.png" class="mystery-icon">
-<h2 style="color:#00ffff">70% High Roller Bonus</h2>
-<p>Deposit $10–$40<br>$10 Cashback if you lose<br>Redeem up to $300<br>Instant Cashout</p>
-<p>📸 Screenshot & send to support</p>
-</div>
-
-</div>
-</div>
-
-</div>
-
-<footer style="opacity:.5;padding:30px">
-© 2026 YOLO SLOTS | 18+ RESPONSIBLE GAMING
-</footer>
-
-<script>
-let opened=false;
-
-document.querySelectorAll('.reveal-btn').forEach(btn=>{
-btn.addEventListener('click',e=>{
-if(opened)return;
-opened=true;
-
-const gift=e.target.closest('.gift');
-gift.classList.add('revealed');
-
-confetti({
-particleCount:140,
-spread:70,
-origin:{y:.6},
-colors:[gift.dataset.color,'#fff']
-});
-});
-});
-</script>
-
-</body>
-</html>
