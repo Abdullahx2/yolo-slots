@@ -3,153 +3,180 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>YOLO SLOTS</title>
+<title>YOLO SLOTS - Premium Experience</title>
 
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <style>
-:root{
---gold:#ffd700;
---pink:#ff4d6d;
---blue:#4dd0ff;
+:root {
+    --gold: #ffd700;
+    --neon-pink: #ff00ff;
+    --neon-blue: #00ffff;
 }
 
-*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,Roboto,sans-serif}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
 
-body{
-min-height:100vh;
-background:radial-gradient(circle at center,#1a1a2e,#0a0a12);
-color:#fff;
-overflow-x:hidden;
-display:flex;
-flex-direction:column;
-align-items:center;
+body {
+    min-height: 100vh;
+    background: radial-gradient(circle at center, #1a1a2e 0%, #0a0a12 100%);
+    color: #fff;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.header{
-text-align:center;
-padding:40px 20px;
+#casino-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+        linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+        url('https://images.unsplash.com/photo-1596838132731-dd96238fd1e9?auto=format&fit=crop&q=80&w=2000');
+    background-size: cover;
+    background-position: center;
 }
 
-.header h1{
-font-size:clamp(2.4rem,7vw,4.5rem);
-letter-spacing:8px;
-background:linear-gradient(to bottom,#fff,var(--gold));
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
+.header {
+    text-align: center;
+    padding: 50px 20px;
 }
 
-.gifts-grid{
-display:flex;
-gap:35px;
-flex-wrap:wrap;
-justify-content:center;
-padding:40px 20px;
-max-width:1200px;
+.header h1 {
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    text-transform: uppercase;
+    background: linear-gradient(to bottom, #fff 20%, var(--gold) 50%, #b8860b 80%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 10px;
 }
 
-.gift{
-width:300px;
-height:400px;
-perspective:1000px;
-touch-action:manipulation;
+.promo-badge {
+    background: var(--neon-pink);
+    padding: 5px 20px;
+    border-radius: 50px;
+    font-weight: bold;
+    box-shadow: 0 0 15px var(--neon-pink);
+    display: inline-block;
+    margin-bottom: 10px;
 }
 
-.gift-inner{
-width:100%;
-height:100%;
-position:relative;
-transform-style:preserve-3d;
-transition:transform .8s ease;
+.gifts-grid {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    padding: 40px;
+    max-width: 1200px;
 }
 
-.gift.selected .gift-inner{
-transform:rotateY(180deg);
+.gift {
+    width: 300px;
+    height: 400px;
+    perspective: 1000px;
+    touch-action: manipulation;
 }
 
-.gift.locked{
-opacity:.35;
-pointer-events:none;
+.gift-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s ease;
+    transform-style: preserve-3d;
 }
 
-.front,.back{
-position:absolute;
-inset:0;
-border-radius:20px;
-border:2px solid var(--gold);
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-backface-visibility:hidden;
-background:linear-gradient(135deg,#111,#000);
+.gift.selected .gift-inner {
+    transform: rotateY(180deg);
 }
 
-.back{
-transform:rotateY(180deg);
-padding:20px;
-text-align:center;
+.gift.locked {
+    opacity: 0.3;
+    pointer-events: none;
 }
 
-.box-icon{
-width:110px;
-height:110px;
-margin-bottom:18px;
+.front, .back {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    border-radius: 20px;
+    border: 2px solid var(--gold);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #222, #000);
+    text-align: center;
+    padding: 20px;
 }
 
-h3,h2{margin-bottom:6px}
-
-.back ul{
-list-style:none;
-line-height:1.6;
-font-size:.95rem;
+.back {
+    transform: rotateY(180deg);
 }
 
-.note{
-margin:30px 20px;
-padding:14px 20px;
-border:1px dashed var(--gold);
-border-radius:14px;
-text-align:center;
+.box-icon {
+    width: 120px;
+    margin-bottom: 20px;
+    filter: none;
 }
 
-footer{
-margin-top:auto;
-padding:30px;
-font-size:.8rem;
-opacity:.5;
+.back ul {
+    list-style: none;
+    line-height: 1.7;
+    font-size: 0.95rem;
 }
 
-@media(max-width:600px){
-.gift{width:260px;height:350px}
+.screenshot-note {
+    margin: 30px 20px;
+    padding: 14px 20px;
+    border-radius: 14px;
+    background: rgba(0,0,0,0.6);
+    border: 1px dashed var(--gold);
+    text-align: center;
+    font-weight: 600;
+}
+
+footer {
+    margin-top: auto;
+    padding: 40px;
+    color: rgba(255,255,255,0.4);
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .gift { width: 260px; height: 350px; }
+    .header h1 { letter-spacing: 4px; }
 }
 </style>
 </head>
 
 <body>
 
+<div id="casino-bg"></div>
+
 <div class="header">
-<h1>YOLO SLOTS</h1>
-<p>Pick one mystery box to unlock your reward</p>
+    <div class="promo-badge">EXCLUSIVE BONUS</div>
+    <h1>YOLO SLOTS</h1>
+    <p>Select one mystery box to reveal your casino bonus</p>
 </div>
 
 <div class="gifts-grid">
 
 <!-- POWER BOOST -->
-<div class="gift" onclick="openGift(this,'#ff4d6d')">
+<div class="gift" onclick="openGift(this,'#ff00ff')">
 <div class="gift-inner">
 <div class="front">
-<img class="box-icon" src="https://cdn-icons-png.flaticon.com/512/169/169367.png">
+<img class="box-icon" src="https://cdn-icons-png.flaticon.com/512/891/891462.png">
 <h3>POWER BOOST</h3>
 <p>Tap to reveal</p>
 </div>
 <div class="back">
-<img class="box-icon" src="https://cdn-icons-png.flaticon.com/512/169/169367.png">
-<h2 style="color:var(--pink)">100% Boost Bonus</h2>
+<img class="box-icon" src="https://cdn-icons-png.flaticon.com/512/891/891462.png">
+<h2 style="color:#ff00ff;">100% Deposit Bonus</h2>
 <ul>
 <li>Deposit $5 – $15</li>
-<li>50% Cashback</li>
-<li>Max $300</li>
+<li>50% Cashback if you lose</li>
+<li>Redeem up to $300</li>
 <li>Instant Cashout</li>
 </ul>
 </div>
@@ -160,17 +187,17 @@ opacity:.5;
 <div class="gift" onclick="openGift(this,'#ffd700')">
 <div class="gift-inner">
 <div class="front">
-<img class="box-icon" src="https://cdn-icons-png.flaticon.com/512/3408/3408506.png">
+<img class="box-icon" src="https://cdn-icons-png.flaticon.com/512/686/686589.png">
 <h3>SPIN SURGE</h3>
 <p>Tap to reveal</p>
 </div>
 <div class="back">
-<img class="box-icon" src="https://cdn-icons-png.flaticon.com/512/3408/3408506.png">
-<h2 style="color:var(--gold)">Free Spins Pack</h2>
+<img class="box-icon" src="https://cdn-icons-png.flaticon.com/512/686/686589.png">
+<h2 style="color:#ffd700;">50% Bonus + Free Plays</h2>
 <ul>
 <li>Deposit $5 – $15</li>
-<li>5 Free Plays</li>
-<li>Max $250</li>
+<li>5 Free Plays if you lose</li>
+<li>Redeem up to $250</li>
 <li>Instant Cashout</li>
 </ul>
 </div>
@@ -178,20 +205,20 @@ opacity:.5;
 </div>
 
 <!-- VIP VAULT -->
-<div class="gift" onclick="openGift(this,'#4dd0ff')">
+<div class="gift" onclick="openGift(this,'#00ffff')">
 <div class="gift-inner">
 <div class="front">
-<img class="box-icon" src="https://cdn-icons-png.flaticon.com/512/942/942748.png">
+<img class="box-icon" src="https://cdn-icons-png.flaticon.com/512/616/616489.png">
 <h3>VIP VAULT</h3>
 <p>Tap to reveal</p>
 </div>
 <div class="back">
-<img class="box-icon" src="https://cdn-icons-png.flaticon.com/512/942/942748.png">
-<h2 style="color:var(--blue)">VIP Bonus</h2>
+<img class="box-icon" src="https://cdn-icons-png.flaticon.com/512/616/616489.png">
+<h2 style="color:#00ffff;">70% High Roller Bonus</h2>
 <ul>
 <li>Deposit $10 – $40</li>
-<li>$10 Cashback</li>
-<li>Max $300</li>
+<li>$10 Cashback if you lose</li>
+<li>Redeem up to $300</li>
 <li>Instant Cashout</li>
 </ul>
 </div>
@@ -200,22 +227,30 @@ opacity:.5;
 
 </div>
 
-<div class="note">
-📸 Take screenshot of revealed bonus and send to support
+<div class="screenshot-note">
+📸 Take a screenshot of the revealed bonus<br>
+👉 Send it to our support to activate your reward
 </div>
 
-<footer>© 2026 YOLO SLOTS | 18+</footer>
+<footer>
+© 2026 YOLO SLOTS | 18+ RESPONSIBLE GAMING
+</footer>
 
 <script>
-let chosen=false;
+let isChosen=false;
 function openGift(el,color){
-if(chosen)return;
-chosen=true;
-el.classList.add("selected");
-document.querySelectorAll(".gift").forEach(g=>{
-if(g!==el)g.classList.add("locked");
-});
-confetti({particleCount:120,spread:70,colors:[color,"#fff"]});
+    if(isChosen) return;
+    isChosen=true;
+    el.classList.add('selected');
+    document.querySelectorAll('.gift').forEach(g=>{
+        if(g!==el) g.classList.add('locked');
+    });
+    confetti({
+        particleCount:120,
+        spread:70,
+        origin:{y:0.6},
+        colors:[color,'#ffffff']
+    });
 }
 </script>
 
