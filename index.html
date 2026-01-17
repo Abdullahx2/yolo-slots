@@ -1,847 +1,242 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yolo Slots - Exclusive Bonus Selection</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* Reset & Base Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YOLO SLOTS – Mystery Bonus</title>
 
-        :root {
-            --yolo-yellow: #FFCC00;
-            --yolo-purple: #9966FF;
-            --yolo-pink: #FF66B2;
-            --yolo-blue: #3399FF;
-            --yolo-green: #33CC99;
-            --dark-bg: #0a0a1a;
-            --card-bg: #1a1a2e;
-            --text-light: #f0f0f0;
-            --accent-red: #FF3366;
-            --accent-teal: #00CCCC;
-            --accent-gold: #FFD700;
-        }
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: var(--dark-bg);
-            color: var(--text-light);
-            min-height: 100vh;
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui}
 
-        /* Animated Background */
-        .bg-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(255, 204, 0, 0.1) 0%, transparent 25%),
-                radial-gradient(circle at 80% 70%, rgba(153, 102, 255, 0.1) 0%, transparent 25%),
-                linear-gradient(180deg, #0a0a1a 0%, #0f0f2a 50%, #0a0a1a 100%);
-        }
+body{
+    min-height:100vh;
+    background:radial-gradient(circle at top,#1b1f3b,#07080f);
+    color:#fff;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    overflow-x:hidden;
+}
 
-        .floating-element {
-            position: absolute;
-            background: var(--yolo-yellow);
-            border-radius: 50%;
-            opacity: 0.1;
-            animation: float 15s infinite linear;
-        }
+header{
+    text-align:center;
+    padding:50px 20px 30px;
+}
 
-        @keyframes float {
-            0% { transform: translateY(100vh) rotate(0deg) scale(0.5); }
-            100% { transform: translateY(-100px) rotate(360deg) scale(1.2); }
-        }
+header h1{
+    font-size:clamp(2.2rem,6vw,4rem);
+    letter-spacing:6px;
+    background:linear-gradient(#fff,#ffd700);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
 
-        /* Header */
-        .header {
-            text-align: center;
-            padding: 3rem 1.5rem 2rem;
-            position: relative;
-            overflow: hidden;
-        }
+header p{
+    opacity:.7;
+    margin-top:10px;
+}
 
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 100%;
-            background: linear-gradient(45deg, 
-                transparent 30%, 
-                rgba(255, 204, 0, 0.08) 50%, 
-                transparent 70%);
-            animation: shine 8s linear infinite;
-            z-index: -1;
-        }
+.grid{
+    display:flex;
+    gap:30px;
+    flex-wrap:wrap;
+    justify-content:center;
+    padding:40px 20px;
+}
 
-        @keyframes shine {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
+.card{
+    width:280px;
+    height:360px;
+    perspective:1200px;
+    touch-action:pan-y;
+}
 
-        .logo-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-        }
+.inner{
+    width:100%;
+    height:100%;
+    position:relative;
+    transform-style:preserve-3d;
+    transition:transform .9s cubic-bezier(.2,.8,.2,1);
+}
 
-        .logo-icon {
-            font-size: 4rem;
-            color: var(--yolo-yellow);
-            filter: drop-shadow(0 0 15px rgba(255, 204, 0, 0.5));
-            animation: spin 20s linear infinite;
-        }
+.card.revealed .inner{
+    transform:rotateY(180deg);
+}
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+.face{
+    position:absolute;
+    inset:0;
+    border-radius:20px;
+    backface-visibility:hidden;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
 
-        .logo-text {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 4rem;
-            font-weight: 900;
-            background: linear-gradient(45deg, var(--yolo-yellow), var(--yolo-purple), var(--yolo-pink));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
+.front{
+    background:linear-gradient(145deg,#10142c,#050611);
+    border:1px solid rgba(255,215,0,.4);
+}
 
-        .tagline {
-            color: var(--yolo-yellow);
-            font-size: 1.1rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            font-weight: 600;
-            margin-top: 0.5rem;
-        }
+.front button{
+    margin-top:25px;
+    padding:14px 28px;
+    border-radius:40px;
+    border:none;
+    background:linear-gradient(135deg,#ffd700,#ffb700);
+    font-weight:700;
+    cursor:pointer;
+}
 
-        /* Welcome Section */
-        .welcome-section {
-            max-width: 900px;
-            margin: 0 auto 3rem;
-            padding: 2.5rem 2rem;
-            text-align: center;
-            background: rgba(26, 26, 46, 0.7);
-            border-radius: 20px;
-            border: 2px solid var(--yolo-yellow);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(255, 204, 0, 0.15);
-            position: relative;
-            overflow: hidden;
-        }
+.back{
+    transform:rotateY(180deg);
+    background:linear-gradient(145deg,#070912,#02030a);
+    border:1px solid rgba(255,215,0,.6);
+}
 
-        .welcome-section::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, var(--yolo-yellow), var(--yolo-purple), var(--yolo-pink));
-            border-radius: 22px;
-            z-index: -1;
-            opacity: 0.2;
-            animation: borderRotate 8s linear infinite;
-        }
+.back img{
+    width:90px;
+    margin-bottom:15px;
+}
 
-        @keyframes borderRotate {
-            0% { filter: hue-rotate(0deg); }
-            100% { filter: hue-rotate(360deg); }
-        }
+.back h2{
+    color:#ffd700;
+    margin-bottom:10px;
+}
 
-        .welcome-title {
-            font-size: 2.5rem;
-            color: var(--yolo-yellow);
-            margin-bottom: 1.5rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+.back ul{
+    list-style:none;
+    line-height:1.6;
+    font-size:.95rem;
+    opacity:.85;
+}
 
-        .welcome-text {
-            color: var(--text-light);
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-        }
+.locked{
+    opacity:.3;
+    pointer-events:none;
+}
 
-        .highlight {
-            color: var(--yolo-yellow);
-            font-weight: 700;
-        }
+.note{
+    margin:20px;
+    padding:16px 22px;
+    border-radius:14px;
+    border:1px dashed rgba(255,215,0,.6);
+    text-align:center;
+    max-width:520px;
+}
 
-        /* Bonus Cards Container */
-        .bonus-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto 4rem;
-        }
-
-        /* Bonus Card */
-        .bonus-card {
-            background: linear-gradient(145deg, var(--card-bg), #222244);
-            border-radius: 20px;
-            overflow: hidden;
-            position: relative;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 3px solid;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-        }
-
-        .bonus-card:hover:not(.selected) {
-            transform: translateY(-10px);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
-        }
-
-        .bonus-card.selected {
-            transform: scale(1.02);
-            box-shadow: 0 0 40px var(--current-color, var(--yolo-yellow));
-        }
-
-        .bonus-card.locked {
-            opacity: 0.4;
-            filter: grayscale(0.7);
-            pointer-events: none;
-        }
-
-        /* Card Colors */
-        .bonus-card[data-type="premium"] { border-color: var(--accent-red); --current-color: var(--accent-red); }
-        .bonus-card[data-type="elite"] { border-color: var(--yolo-yellow); --current-color: var(--yolo-yellow); }
-        .bonus-card[data-type="vip"] { border-color: var(--accent-teal); --current-color: var(--accent-teal); }
-
-        .card-header {
-            padding: 2rem;
-            text-align: center;
-            background: linear-gradient(135deg, 
-                rgba(var(--current-color-rgb, 255, 204, 0), 0.1),
-                transparent);
-        }
-
-        .bonus-icon {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--current-color, var(--yolo-yellow));
-            filter: drop-shadow(0 0 10px currentColor);
-        }
-
-        .bonus-number {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--current-color, var(--yolo-yellow));
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .bonus-name {
-            font-size: 2.2rem;
-            font-weight: 900;
-            color: var(--current-color, var(--yolo-yellow));
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .card-content {
-            padding: 2rem;
-        }
-
-        .bonus-list {
-            list-style: none;
-        }
-
-        .bonus-list li {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            font-size: 1rem;
-        }
-
-        .bonus-list li i {
-            color: var(--yolo-yellow);
-            font-size: 1.2rem;
-            width: 24px;
-            text-align: center;
-        }
-
-        .select-btn {
-            display: block;
-            width: 100%;
-            padding: 1.2rem;
-            background: linear-gradient(45deg, var(--current-color, var(--yolo-yellow)), 
-                color-mix(in srgb, var(--current-color, var(--yolo-yellow)) 70%, white));
-            color: #000;
-            border: none;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 1.5rem;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        .select-btn:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .select-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        /* Selected Bonus Overlay */
-        .selected-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            padding: 2rem;
-        }
-
-        .selected-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .selected-content {
-            background: linear-gradient(145deg, var(--card-bg), #222244);
-            border-radius: 25px;
-            padding: 3rem;
-            text-align: center;
-            max-width: 500px;
-            width: 100%;
-            border: 3px solid var(--yolo-yellow);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
-            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        @keyframes popIn {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        .selected-icon {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
-            color: var(--selected-color, var(--yolo-yellow));
-            filter: drop-shadow(0 0 20px currentColor);
-        }
-
-        .selected-title {
-            font-size: 2.8rem;
-            color: var(--selected-color, var(--yolo-yellow));
-            margin-bottom: 1.5rem;
-            text-transform: uppercase;
-            font-weight: 900;
-        }
-
-        .selected-details {
-            font-size: 1.2rem;
-            color: var(--text-light);
-            margin-bottom: 2rem;
-            line-height: 1.8;
-        }
-
-        .bonus-code {
-            background: rgba(255, 204, 0, 0.1);
-            border: 2px dashed var(--yolo-yellow);
-            padding: 1.5rem 2rem;
-            border-radius: 15px;
-            font-size: 2rem;
-            letter-spacing: 4px;
-            font-weight: 700;
-            margin: 2rem 0;
-            font-family: monospace;
-            color: var(--yolo-yellow);
-        }
-
-        .continue-btn {
-            background: linear-gradient(45deg, var(--yolo-yellow), var(--yolo-purple));
-            color: #000;
-            border: none;
-            padding: 1.2rem 3rem;
-            font-size: 1.2rem;
-            font-weight: 800;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 1rem;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        .continue-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(255, 204, 0, 0.4);
-        }
-
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 3rem 2rem;
-            background: linear-gradient(to top, rgba(10, 10, 26, 0.9), transparent);
-            border-top: 1px solid rgba(255, 204, 0, 0.2);
-        }
-
-        .footer-text {
-            color: rgba(240, 240, 240, 0.6);
-            font-size: 0.9rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-subtext {
-            color: var(--yolo-yellow);
-            font-size: 0.8rem;
-            font-style: italic;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .logo-text {
-                font-size: 3rem;
-            }
-            
-            .logo-icon {
-                font-size: 3rem;
-            }
-            
-            .welcome-title {
-                font-size: 2rem;
-            }
-            
-            .bonus-cards {
-                grid-template-columns: 1fr;
-                padding: 1.5rem;
-                gap: 1.5rem;
-            }
-            
-            .selected-content {
-                padding: 2rem;
-            }
-            
-            .selected-title {
-                font-size: 2.2rem;
-            }
-            
-            .bonus-code {
-                font-size: 1.5rem;
-                padding: 1rem 1.5rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .header {
-                padding: 2rem 1rem 1.5rem;
-            }
-            
-            .logo-container {
-                gap: 1rem;
-            }
-            
-            .logo-text {
-                font-size: 2.2rem;
-            }
-            
-            .welcome-section {
-                padding: 1.5rem;
-                margin: 0 1rem 2rem;
-            }
-            
-            .bonus-name {
-                font-size: 1.8rem;
-            }
-            
-            .select-btn {
-                padding: 1rem;
-                font-size: 1rem;
-            }
-        }
-
-        /* Utility Classes */
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border: 0;
-        }
-    </style>
+footer{
+    margin-top:auto;
+    padding:30px;
+    font-size:.8rem;
+    opacity:.4;
+}
+</style>
 </head>
+
 <body>
-    <!-- Animated Background -->
-    <div class="bg-animation" id="bgAnimation"></div>
 
-    <!-- Header -->
-    <header class="header">
-        <div class="logo-container">
-            <div class="logo-icon">🎰</div>
-            <h1 class="logo-text">YOLO SLOTS</h1>
-        </div>
-        <p class="tagline">EXCLUSIVE BONUS SELECTION</p>
-    </header>
+<header>
+<h1>YOLO SLOTS</h1>
+<p>Tap once to reveal your mystery bonus</p>
+</header>
 
-    <!-- Welcome Section -->
-    <section class="welcome-section">
-        <h2 class="welcome-title">🎁 Choose Your Exclusive Bonus 🎁</h2>
-        <p class="welcome-text">
-            Select <span class="highlight">ONE</span> of the three premium bonus offers below. 
-            Each offer comes with amazing rewards and instant cashout!
-        </p>
-        <p class="welcome-text">
-            <span class="highlight">Click SELECT</span> to immediately claim your chosen bonus.
-            Once selected, other options will be locked.
-        </p>
-    </section>
+<div class="grid">
 
-    <!-- Bonus Cards -->
-    <main class="bonus-cards">
-        <!-- Premium Bonus Card -->
-        <article class="bonus-card" data-type="premium" id="premiumCard">
-            <div class="card-header">
-                <div class="bonus-icon">🔥</div>
-                <div class="bonus-number">OPTION 1</div>
-                <h2 class="bonus-name">PREMIUM BONUS</h2>
-            </div>
-            
-            <div class="card-content">
-                <ul class="bonus-list">
-                    <li>
-                        <i class="fas fa-percentage"></i>
-                        <span><strong>150% BONUS</strong> on deposit $5-$15</span>
-                    </li>
-                    <li>
-                        <i class="fas fa-gamepad"></i>
-                        <span>If lose: <strong>5 FREE PLAYS</strong></span>
-                    </li>
-                    <li>
-                        <i class="fas fa-coins"></i>
-                        <span>Redeem up to <strong>$250</strong></span>
-                    </li>
-                    <li>
-                        <i class="fas fa-bolt"></i>
-                        <span><strong>INSTANT CASHOUT</strong></span>
-                    </li>
-                </ul>
-                
-                <button class="select-btn" onclick="selectBonus('premium')" id="premiumBtn">
-                    SELECT THIS BONUS
-                </button>
-            </div>
-        </article>
+<!-- CARD 1 -->
+<div class="card">
+<div class="inner">
+<div class="face front">
+<h3>POWER BOOST</h3>
+<button onclick="reveal(this,'#ff00ff')">REVEAL BONUS</button>
+</div>
+<div class="face back">
+<img src="https://cdn-icons-png.flaticon.com/512/891/891462.png">
+<h2>100% Deposit Bonus</h2>
+<ul>
+<li>Deposit $5 – $15</li>
+<li>50% Cashback</li>
+<li>Up to $300</li>
+</ul>
+</div>
+</div>
+</div>
 
-        <!-- Elite Bonus Card -->
-        <article class="bonus-card" data-type="elite" id="eliteCard">
-            <div class="card-header">
-                <div class="bonus-icon">💎</div>
-                <div class="bonus-number">OPTION 2</div>
-                <h2 class="bonus-name">ELITE BONUS</h2>
-            </div>
-            
-            <div class="card-content">
-                <ul class="bonus-list">
-                    <li>
-                        <i class="fas fa-percentage"></i>
-                        <span><strong>70% BONUS</strong> on deposit $10-$40</span>
-                    </li>
-                    <li>
-                        <i class="fas fa-money-bill-wave"></i>
-                        <span>If lose: <strong>$10 CASHBACK</strong></span>
-                    </li>
-                    <li>
-                        <i class="fas fa-coins"></i>
-                        <span>Redeem up to <strong>$300</strong></span>
-                    </li>
-                    <li>
-                        <i class="fas fa-bolt"></i>
-                        <span><strong>INSTANT CASHOUT</strong></span>
-                    </li>
-                </ul>
-                
-                <button class="select-btn" onclick="selectBonus('elite')" id="eliteBtn">
-                    SELECT THIS BONUS
-                </button>
-            </div>
-        </article>
+<!-- CARD 2 -->
+<div class="card">
+<div class="inner">
+<div class="face front">
+<h3>SPIN SURGE</h3>
+<button onclick="reveal(this,'#ffd700')">REVEAL BONUS</button>
+</div>
+<div class="face back">
+<img src="https://cdn-icons-png.flaticon.com/512/686/686589.png">
+<h2>Free Spin Bundle</h2>
+<ul>
+<li>5 Free Plays</li>
+<li>Loss Protection</li>
+<li>Fast Cashout</li>
+</ul>
+</div>
+</div>
+</div>
 
-        <!-- VIP Bonus Card -->
-        <article class="bonus-card" data-type="vip" id="vipCard">
-            <div class="card-header">
-                <div class="bonus-icon">👑</div>
-                <div class="bonus-number">OPTION 3</div>
-                <h2 class="bonus-name">VIP BONUS</h2>
-            </div>
-            
-            <div class="card-content">
-                <ul class="bonus-list">
-                    <li>
-                        <i class="fas fa-percentage"></i>
-                        <span><strong>100% BONUS</strong> on deposit $5-$15</span>
-                    </li>
-                    <li>
-                        <i class="fas fa-money-bill-wave"></i>
-                        <span>If lose: <strong>50% CASHBACK</strong></span>
-                    </li>
-                    <li>
-                        <i class="fas fa-coins"></i>
-                        <span>Redeem up to <strong>$300</strong></span>
-                    </li>
-                    <li>
-                        <i class="fas fa-bolt"></i>
-                        <span><strong>INSTANT CASHOUT</strong></span>
-                    </li>
-                </ul>
-                
-                <button class="select-btn" onclick="selectBonus('vip')" id="vipBtn">
-                    SELECT THIS BONUS
-                </button>
-            </div>
-        </article>
-    </main>
+<!-- CARD 3 -->
+<div class="card">
+<div class="inner">
+<div class="face front">
+<h3>VIP VAULT</h3>
+<button onclick="reveal(this,'#00ffff')">REVEAL BONUS</button>
+</div>
+<div class="face back">
+<img src="https://cdn-icons-png.flaticon.com/512/616/616489.png">
+<h2>High Roller Bonus</h2>
+<ul>
+<li>70% Match</li>
+<li>$10 Cashback</li>
+<li>VIP Support</li>
+</ul>
+</div>
+</div>
+</div>
 
-    <!-- Selected Bonus Overlay -->
-    <div class="selected-overlay" id="selectedOverlay">
-        <div class="selected-content">
-            <div class="selected-icon" id="selectedIcon">🎉</div>
-            <h2 class="selected-title" id="selectedTitle">BONUS SELECTED!</h2>
-            <div class="selected-details" id="selectedDetails">
-                <!-- Details will be filled by JavaScript -->
-            </div>
-            <div class="bonus-code" id="bonusCode">YOLO-BONUS-CODE</div>
-            <p style="color: var(--yolo-yellow); margin: 1.5rem 0; font-weight: 600;">
-                📸 Take screenshot and send to support!
-            </p>
-            <button class="continue-btn" onclick="closeOverlay()">
-                CONTINUE TO YOLO SLOTS
-            </button>
-        </div>
-    </div>
+</div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <p class="footer-text">YOLO SLOTS OFFICIAL PLATFORM</p>
-        <p class="footer-subtext">Play Responsibly • 18+ Only • Terms & Conditions Apply</p>
-    </footer>
+<div class="note">
+📸 Screenshot the revealed bonus<br>
+👉 Send it to support to activate
+</div>
 
-    <script>
-        // Create floating background elements
-        function createBackgroundAnimation() {
-            const bg = document.getElementById('bgAnimation');
-            const colors = ['#FFCC00', '#9966FF', '#FF66B2', '#3399FF'];
-            
-            for (let i = 0; i < 25; i++) {
-                const element = document.createElement('div');
-                element.className = 'floating-element';
-                
-                const size = Math.random() * 60 + 20;
-                const left = Math.random() * 100;
-                const duration = Math.random() * 20 + 15;
-                const delay = Math.random() * 10;
-                const color = colors[Math.floor(Math.random() * colors.length)];
-                
-                element.style.width = `${size}px`;
-                element.style.height = `${size}px`;
-                element.style.left = `${left}%`;
-                element.style.animationDuration = `${duration}s`;
-                element.style.animationDelay = `${delay}s`;
-                element.style.backgroundColor = color;
-                element.style.opacity = `${Math.random() * 0.08 + 0.02}`;
-                
-                bg.appendChild(element);
-            }
-        }
+<footer>
+© 2026 YOLO SLOTS · 18+ Responsible Gaming
+</footer>
 
-        // Bonus data
-        const bonuses = {
-            premium: {
-                title: '🔥 PREMIUM BONUS SELECTED!',
-                icon: '🔥',
-                details: '• 150% Bonus on $5-$15 deposit<br>• 5 Free Plays if you lose<br>• Redeem up to $250<br>• Instant Cashout Available',
-                code: 'YOLO-PREMIUM150',
-                color: '#FF3366'
-            },
-            elite: {
-                title: '💎 ELITE BONUS SELECTED!',
-                icon: '💎',
-                details: '• 70% Bonus on $10-$40 deposit<br>• $10 Cashback if you lose<br>• Redeem up to $300<br>• Instant Cashout Available',
-                code: 'YOLO-ELITE70',
-                color: '#FFCC00'
-            },
-            vip: {
-                title: '👑 VIP BONUS SELECTED!',
-                icon: '👑',
-                details: '• 100% Bonus on $5-$15 deposit<br>• 50% Cashback if you lose<br>• Redeem up to $300<br>• Instant Cashout Available',
-                code: 'YOLO-VIP100',
-                color: '#00CCCC'
-            }
-        };
+<script>
+let picked=false;
 
-        let isSelected = false;
+function reveal(btn,color){
+    if(picked) return;
+    picked=true;
 
-        function selectBonus(type) {
-            if (isSelected) return;
-            
-            isSelected = true;
-            
-            // Get selected bonus data
-            const bonus = bonuses[type];
-            
-            // Update selected card
-            const selectedCard = document.getElementById(`${type}Card`);
-            selectedCard.classList.add('selected');
-            
-            // Disable all buttons
-            document.querySelectorAll('.select-btn').forEach(btn => {
-                btn.disabled = true;
-                btn.textContent = 'LOCKED';
-            });
-            
-            // Lock other cards
-            ['premium', 'elite', 'vip'].forEach(bonusType => {
-                if (bonusType !== type) {
-                    const card = document.getElementById(`${bonusType}Card`);
-                    card.classList.add('locked');
-                }
-            });
-            
-            // Update overlay content
-            document.getElementById('selectedIcon').textContent = bonus.icon;
-            document.getElementById('selectedTitle').textContent = bonus.title;
-            document.getElementById('selectedDetails').innerHTML = bonus.details;
-            document.getElementById('bonusCode').textContent = bonus.code;
-            
-            // Set color
-            document.documentElement.style.setProperty('--selected-color', bonus.color);
-            
-            // Show overlay immediately
-            setTimeout(() => {
-                document.getElementById('selectedOverlay').classList.add('active');
-            }, 300);
-            
-            // Play selection sound
-            playSelectionSound();
-        }
+    const card=btn.closest('.card');
+    card.classList.add('revealed');
 
-        function closeOverlay() {
-            document.getElementById('selectedOverlay').classList.remove('active');
-            
-            // Show final confirmation
-            const selectedType = getSelectedType();
-            if (selectedType) {
-                const bonus = bonuses[selectedType];
-                setTimeout(() => {
-                    alert(`🎉 ${bonus.title}\n\n${bonus.details.replace(/<br>/g, '\n')}\n\nBonus Code: ${bonus.code}\n\nPlease take a screenshot and send it to our support team to claim your bonus!`);
-                }, 300);
-            }
-        }
+    document.querySelectorAll('.card').forEach(c=>{
+        if(c!==card) c.classList.add('locked');
+    });
 
-        function getSelectedType() {
-            if (document.getElementById('premiumCard').classList.contains('selected')) return 'premium';
-            if (document.getElementById('eliteCard').classList.contains('selected')) return 'elite';
-            if (document.getElementById('vipCard').classList.contains('selected')) return 'vip';
-            return null;
-        }
+    confetti({
+        particleCount:120,
+        spread:80,
+        origin:{y:.6},
+        colors:[color,'#ffffff']
+    });
+}
+</script>
 
-        function playSelectionSound() {
-            try {
-                // Create a simple beep sound using Web Audio API
-                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
-                
-                oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                
-                oscillator.frequency.value = 800;
-                oscillator.type = 'sine';
-                
-                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.5);
-                
-                oscillator.start();
-                oscillator.stop(audioContext.currentTime + 0.5);
-            } catch (error) {
-                // Sound not supported - silent fail
-            }
-        }
-
-        // Initialize when page loads
-        document.addEventListener('DOMContentLoaded', () => {
-            createBackgroundAnimation();
-            
-            // Add animation to cards
-            const cards = document.querySelectorAll('.bonus-card');
-            cards.forEach((card, index) => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(30px)';
-                
-                setTimeout(() => {
-                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }, index * 200);
-            });
-            
-            // Close overlay when clicking outside
-            document.getElementById('selectedOverlay').addEventListener('click', (e) => {
-                if (e.target === document.getElementById('selectedOverlay')) {
-                    closeOverlay();
-                }
-            });
-        });
-
-        // Handle keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeOverlay();
-            }
-        });
-    </script>
 </body>
 </html>
