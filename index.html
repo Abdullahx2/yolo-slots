@@ -23,7 +23,6 @@ overflow-x:hidden;
 display:flex;
 flex-direction:column;
 align-items:center;
-touch-action:manipulation;
 }
 
 /* background */
@@ -36,13 +35,6 @@ linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)),
 url('https://images.unsplash.com/photo-1596838132731-dd96238fd1e9?auto=format&fit=crop&q=80&w=2000');
 background-size:cover;
 background-position:center;
-}
-
-.overlay-glow{
-position:fixed;
-inset:0;
-background:radial-gradient(circle at 50% 50%,transparent 25%,rgba(0,0,0,.8) 100%);
-z-index:-1;
 }
 
 /* header */
@@ -80,79 +72,55 @@ max-width:1200px;
 width:300px;
 height:400px;
 perspective:1200px;
-cursor:pointer;
-touch-action:manipulation;
 }
 .gift-inner{
-position:relative;
 width:100%;
 height:100%;
-transform-style:preserve-3d;
-transition:transform .6s ease;
-}
-.gift.selected .gift-inner{transform:rotateY(180deg)}
-.gift.locked{opacity:.3;filter:grayscale(1);pointer-events:none}
-
-.front,.back{
-position:absolute;
-inset:0;
 border-radius:20px;
 border:2px solid var(--gold);
+background:linear-gradient(135deg,#222,#000);
 display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center;
-backface-visibility:hidden;
-background:linear-gradient(135deg,#222,#000);
 box-shadow:0 0 30px rgba(0,0,0,.5);
-}
-
-.back{
-transform:rotateY(180deg);
-padding:20px;
-text-align:center;
-background:linear-gradient(135deg,#1a1a1a,#000);
 }
 
 .box-icon{
 width:120px;
 height:120px;
-margin-bottom:20px;
+margin-bottom:15px;
 filter:drop-shadow(0 0 12px currentColor);
 }
 
-.back ul{
-list-style:none;
-line-height:1.7;
-margin-top:10px;
-font-size:.95rem;
+.reveal-btn{
+margin-top:18px;
+padding:12px 26px;
+border-radius:30px;
+border:2px solid var(--gold);
+background:transparent;
+color:var(--gold);
+font-weight:700;
+letter-spacing:1px;
+cursor:pointer;
+}
+.reveal-btn:active{
+transform:scale(.96);
 }
 
-/* screenshot note */
-.screenshot-note{
-margin:30px 20px;
-padding:14px 20px;
-border-radius:14px;
-background:rgba(0,0,0,.6);
-border:1px dashed var(--gold);
-text-align:center;
-font-weight:600;
+.gift.revealed{
+background:linear-gradient(135deg,#1a1a1a,#000);
 }
 
-/* footer */
-footer{
-margin-top:auto;
-padding:40px;
-font-size:.8rem;
-opacity:.5;
-text-align:center;
+.gift.revealed .gift-inner{
+background:linear-gradient(135deg,#1a1a1a,#000);
 }
+
+.hidden{display:none}
 
 /* mobile */
 @media(max-width:768px){
-#casino-bg{position:absolute}
-.overlay-glow{display:none}
-.gift{width:260px;height:350px}
+.gift{width:260px;height:auto}
 .header h1{letter-spacing:4px}
 }
 </style>
@@ -161,100 +129,83 @@ text-align:center;
 <body>
 
 <div id="casino-bg"></div>
-<div class="overlay-glow"></div>
 
 <div class="header">
 <div class="promo-badge">EXCLUSIVE BONUS</div>
 <h1>YOLO SLOTS</h1>
-<p>Select one mystery box to reveal your casino bonus</p>
+<p>Select one bonus and tap reveal</p>
 </div>
 
-<div class="gifts-grid" id="giftGrid">
+<div class="gifts-grid">
 
 <div class="gift" data-color="#ff00ff">
 <div class="gift-inner">
-<div class="front" style="color:var(--neon-pink)">
 <img src="https://cdn-icons-png.flaticon.com/512/261/261947.png" class="box-icon">
 <h3>100% BONUS BOX</h3>
-</div>
-<div class="back">
-<h2 style="color:var(--neon-pink)">100% Deposit Bonus</h2>
-<ul>
-<li>Deposit $5–$15</li>
-<li>50% Cashback if you lose</li>
-<li>Redeem up to $300</li>
-<li>Instant Cashout</li>
-</ul>
+<button class="reveal-btn">REVEAL BONUS</button>
+
+<div class="result hidden">
+<h2 style="color:#ff00ff">100% Deposit Bonus</h2>
+<p>Deposit $5–$15<br>50% Cashback if lose<br>Redeem up to $300<br>Instant Cashout</p>
+<p>📸 Take screenshot & send to support</p>
 </div>
 </div>
 </div>
 
 <div class="gift" data-color="#ffd700">
 <div class="gift-inner">
-<div class="front" style="color:var(--gold)">
 <img src="https://cdn-icons-png.flaticon.com/512/2150/2150150.png" class="box-icon">
 <h3>50% BONUS BOX</h3>
-</div>
-<div class="back">
-<h2 style="color:var(--gold)">50% Bonus + Free Plays</h2>
-<ul>
-<li>Deposit $5–$15</li>
-<li>5 Free Plays if you lose</li>
-<li>Redeem up to $250</li>
-<li>Instant Cashout</li>
-</ul>
+<button class="reveal-btn">REVEAL BONUS</button>
+
+<div class="result hidden">
+<h2 style="color:#ffd700">50% Bonus + Free Plays</h2>
+<p>Deposit $5–$15<br>5 Free Plays if lose<br>Redeem up to $250<br>Instant Cashout</p>
+<p>📸 Take screenshot & send to support</p>
 </div>
 </div>
 </div>
 
 <div class="gift" data-color="#00ffff">
 <div class="gift-inner">
-<div class="front" style="color:var(--neon-blue)">
 <img src="https://cdn-icons-png.flaticon.com/512/3209/3209129.png" class="box-icon">
 <h3>70% BONUS BOX</h3>
-</div>
-<div class="back">
-<h2 style="color:var(--neon-blue)">70% High Roller Bonus</h2>
-<ul>
-<li>Deposit $10–$40</li>
-<li>$10 Cashback if you lose</li>
-<li>Redeem up to $300</li>
-<li>Instant Cashout</li>
-</ul>
+<button class="reveal-btn">REVEAL BONUS</button>
+
+<div class="result hidden">
+<h2 style="color:#00ffff">70% High Roller Bonus</h2>
+<p>Deposit $10–$40<br>$10 Cashback if lose<br>Redeem up to $300<br>Instant Cashout</p>
+<p>📸 Take screenshot & send to support</p>
 </div>
 </div>
 </div>
 
 </div>
 
-<div class="screenshot-note">
-📸 Take a screenshot of the revealed bonus<br>
-👉 Send it to our support to activate your reward
-</div>
-
-<footer>
+<footer style="opacity:.5;padding:30px">
 © 2026 YOLO SLOTS | 18+ RESPONSIBLE GAMING
 </footer>
 
 <script>
-let locked=false;
+let opened=false;
 
-document.getElementById('giftGrid').addEventListener('pointerdown',function(e){
+document.querySelectorAll('.reveal-btn').forEach(btn=>{
+btn.addEventListener('click',e=>{
+if(opened)return;
+opened=true;
+
 const gift=e.target.closest('.gift');
-if(!gift||locked)return;
+gift.classList.add('revealed');
+btn.remove();
 
-locked=true;
-gift.classList.add('selected');
-
-document.querySelectorAll('.gift').forEach(g=>{
-if(g!==gift)g.classList.add('locked');
-});
+gift.querySelector('.result').classList.remove('hidden');
 
 confetti({
 particleCount:120,
 spread:70,
 origin:{y:.6},
-colors:[gift.dataset.color,'#ffffff']
+colors:[gift.dataset.color,'#fff']
+});
 });
 });
 </script>
